@@ -6,11 +6,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>스캔 서비스 가격 계산기</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .open-chat-banner {
+      background: linear-gradient(90deg, #ffca28, #ff9800);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .open-chat-banner h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .btn-chat {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .btn-chat:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s;
+    }
+  </style>
 </head>
 
 <body class="bg-light p-3">
   <div class="container">
-    <h1 class="mb-3 text-center">스캔 서비스 가격 계산기</h1>
+    <h1 class="mb-4 text-center">스캔 서비스 가격 계산기</h1>
+
+    <!-- 오픈채팅 배너 -->
+    <div class="open-chat-banner">
+      <h2>⯈ 카카오톡 오픈채팅으로 빠르게 문의하기</h2>
+      <a href="https://open.kakao.com/o/saMv4uCh" target="_blank" class="btn btn-dark btn-lg btn-chat px-5 py-3">
+        <i class="bi bi-chat-dots-fill me-2"></i>오픈채팅 입장하기
+      </a>
+      <div class="mt-3">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://open.kakao.com/o/saMv4uCh"
+          alt="오픈채팅 QR코드" class="rounded" style="width:120px; height:120px;">
+        <div class="small text-muted mt-1">QR코드를 스캔해도 연결됩니다</div>
+      </div>
+    </div>
+
     <!-- 북스캔 서비스 안내 -->
     <div class="alert alert-primary mb-3 small">
       <div class="fw-bold mb-1"><span style="font-size:1.2em;">📚</span> 북스캔 서비스</div>
@@ -39,18 +81,17 @@
         <li>책은 직접 방문 또는 택배/퀵으로 보내주셔야 하며, <span class="fw-bold">영도 방문 수령(저녁 시간대)</span>도 가능합니다.</li>
         <li>스캔 파일은 <span class="fw-bold">개인 보관용</span>으로만 사용해 주세요. (저작권법 준수 필수)</li>
       </ul>
-      <div class="mb-1"><span class="fw-bold text-info">문의</span></div>
-      <div>채팅으로 견적, 작업기간, 방문 시간 편하게 문의 주세요!</div>
     </div>
+
     <!-- 샘플 다운로드 -->
-    <div class="mb-3 d-flex flex-wrap gap-2 justify-content-center">
+    <div class="mb-4 d-flex flex-wrap gap-2 justify-content-center">
       <a href="sample/300dpi_sample.pdf" target="_blank" class="btn btn-outline-secondary btn-sm">300dpi 샘플</a>
       <a href="sample/400dpi_sample.pdf" target="_blank" class="btn btn-outline-secondary btn-sm">400dpi(고해상본) 샘플</a>
       <a href="sample/ocr_sample.pdf" target="_blank" class="btn btn-outline-secondary btn-sm">OCR 샘플</a>
     </div>
 
     <!-- 상단 안내 -->
-    <div class="alert alert-info small d-flex justify-content-between align-items-center">
+    <div class="alert alert-info small d-flex justify-content-between align-items-center mb-4">
       <div>
         <strong>안내:</strong>
         1~100쪽 3,000원, 이후 100쪽마다 +2,000원 / OCR +2,000원 / 고해상도(400dpi) +2,000원
@@ -59,7 +100,7 @@
         안내</button>
     </div>
 
-    <!-- 테이블 -->
+    <!-- 가격 계산 테이블 -->
     <table class="table table-bordered text-center align-middle" id="bookTable">
       <thead class="table-dark">
         <tr>
@@ -91,8 +132,10 @@
         </tr>
       </tbody>
     </table>
-    <button class="btn btn-primary mb-3" onclick="addRow()">권 추가</button>
-    <div class="result h3 text-end text-primary bg-light border p-2 rounded" id="result">총 가격: 0원</div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <button class="btn btn-primary" onclick="addRow()">권 추가</button>
+      <div id="result" class="result h4 text-primary bg-light border p-2 rounded">총 가격: 0원</div>
+    </div>
   </div>
 
   <!-- 가격 안내 모달 -->
@@ -123,15 +166,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Bootstrap tooltip 활성화
-    document.addEventListener("DOMContentLoaded", function () {
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-      tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-        new bootstrap.Tooltip(tooltipTriggerEl);
-      });
+    document.addEventListener("DOMContentLoaded", () => {
+      const tooltipList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      tooltipList.forEach(el => new bootstrap.Tooltip(el));
       calculatePrice();
     });
-
     document.getElementById("bookTable").addEventListener("input", calculatePrice);
     document.getElementById("bookTable").addEventListener("change", calculatePrice);
 
@@ -148,49 +187,33 @@
     }
 
     function removeRow(btn) {
-      const row = btn.closest("tr");
       const tbody = document.querySelector("#bookTable tbody");
       if (tbody.rows.length > 1) {
-        row.remove();
+        btn.closest("tr").remove();
         calculatePrice();
-      } else {
-        alert("최소 한 권은 입력해야 합니다.");
       }
     }
 
     function calculatePrice() {
-      const rows = document.querySelectorAll("#bookTable tbody tr");
-      let total = 0;
-      let bookSum = 0;
-
-      rows.forEach(row => {
-        const bookCount = parseInt(row.querySelector(".bookCount").value) || 0;
-        const pageCount = parseInt(row.querySelector(".pageCount").value) || 0;
-        const ocr = row.querySelector(".ocr").checked;
-        const highRes = row.querySelector(".highRes").checked;
-
-        let basePrice = 0;
-        for (let i = 0; i < bookCount; i++) {
-          let price = 3000;
-          if (pageCount > 100) {
-            price += Math.ceil((pageCount - 100) / 100) * 2000;
-          }
-          if (ocr) price += 2000;
-          if (highRes) price += 2000;
-          basePrice += price;
+      let total = 0, bookSum = 0;
+      document.querySelectorAll("#bookTable tbody tr").forEach(row => {
+        const c = +row.querySelector(".bookCount").value || 0;
+        const p = +row.querySelector(".pageCount").value || 0;
+        const o = row.querySelector(".ocr").checked;
+        const h = row.querySelector(".highRes").checked;
+        let base = 0;
+        for (let i = 0; i < c; i++) {
+          let price = 3000 + (p > 100 ? Math.ceil((p - 100) / 100) * 2000 : 0);
+          if (o) price += 2000;
+          if (h) price += 2000;
+          base += price;
         }
-
-        row.querySelector(".individualPrice").innerText = `${Math.round(basePrice)}원`;
-        total += basePrice;
-        bookSum += bookCount;
+        row.querySelector(".individualPrice").innerText = `${Math.round(base)}원`;
+        total += base;
+        bookSum += c;
       });
-
-      if (bookSum >= 10) {
-        total *= 0.8;
-      } else if (bookSum >= 5) {
-        total *= 0.9;
-      }
-
+      if (bookSum >= 10) total *= 0.8;
+      else if (bookSum >= 5) total *= 0.9;
       document.getElementById("result").innerText = `총 가격: ${Math.round(total)}원`;
     }
   </script>
