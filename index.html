@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스캔 서비스 가격 계산기</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-3">
+  <div class="container">
+    <h1 class="mb-4 text-center">스캔 서비스 가격 계산기</h1>
+    <table class="table table-bordered text-center align-middle" id="bookTable">
+      <thead>
+        <tr class="table-secondary">
+          <th>1권 기본</th>
+          <th>1~100: 3,000원<br>101~200: 5,000원<br>201~300: 7,000원</th>
+          <th>+1,500원</th>
+          <th>+2,000원</th>
+          <th>+2,000원</th>
+          <th>별도 견적</th>
+          <th>개별 가격</th>
+          <th></th>
+        </tr>
+        <tr class="table-dark">
+          <th>권 수</th>
+          <th>쪽 수</th>
+          <th>컬러</th>
+          <th>OCR</th>
+          <th>고해상도</th>
+          <th>희귀본</th>
+          <th>개별 가격</th>
+          <th>삭제</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" class="form-control bookCount" min="1" value="1"></td>
+          <td><input type="number" class="form-control pageCount" min="1" value="100"></td>
+          <td><input type="checkbox" class="form-check-input colorScan"></td>
+          <td><input type="checkbox" class="form-check-input ocr"></td>
+          <td><input type="checkbox" class="form-check-input highRes"></td>
+          <td><input type="checkbox" class="form-check-input specialBook"></td>
+          <td class="individualPrice">3000원</td>
+          <td><button class="btn btn-sm btn-danger" onclick="removeRow(this)">삭제</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary mb-3" onclick="addRow()">권 추가</button>
+    <div class="result h4 text-end" id="result">총 가격: 0원</div>
+  </div>
+
+  <script>
+    document.getElementById("bookTable").addEventListener("input", calculatePrice);
+    document.getElementById("bookTable").addEventListener("change", calculatePrice);
+
+    function addRow() {
+      const tbody = document.querySelector("#bookTable tbody");
+      const newRow = tbody.rows[0].cloneNode(true);
+      newRow.querySelectorAll("input").forEach(input => {
+        if (input.type === "number") input.value = input.classList.contains("bookCount") ? 1 : 100;
+        if (input.type === "checkbox") input.checked = false;
+      });
+      newRow.querySelector(".individualPrice").innerText = "3000원";
+      tbody.appendChild(newRow);
+      calculatePrice();
+    }
+
+    function removeRow(btn) {
+      const row = btn.closest("tr");
+      const tbody = document.querySelector("#bookTable tbody");
+      if (tbody.rows.length > 1) {
+        row.remove();
+        calculatePrice();
+      } else {
+        alert("최소 한 권은 입력해야 합니다.");
+      }
+    }
+
+    function calculatePrice() {
+      const rows = document.querySelectorAll("#bookTable tbody tr");
+      let total = 0;
+      let bookSum = 0;
+      let specialExist = false;
+
+      rows.forEach(row => {
+        const bookCount = parseInt(row.querySelector(".bookCount").value) || 0;
+        const pageCount = parseInt(row.querySelector(".pageCount").value) || 0;
+        const colorScan = row.querySelector(".colorScan").checked;
+        const ocr = row.querySelector(".ocr").checked;
+        const highRes = row.querySelector(".highRes").checked;
+        const specialBook = row.querySelector(".specialBook").checked;
+
+        if (specialBook) specialExist = true;
+
+        let basePrice = 0;
+        for (let i = 0; i < bookCount; i++) {
+          let price = 3000;
+          if (pageCount > 100) {
+            price += Math.ceil((pageCount - 100) / 100) * 2000;
+          }
+          if (colorScan) price += 1500;
+          if (ocr) price += 2000;
+          if (highRes) price += 2000;
+          basePrice += price;
+        }
+
+        row.querySelector(".individualPrice").innerText = `${Math.round(basePrice)}원`;
+        total += basePrice;
+        bookSum += bookCount;
+      });
+
+      if (specialExist) {
+        document.getElementById("result").innerText = "총 가격: 별도 견적 (상태 확인 필요)";
+        return;
+      }
+
+      if (bookSum >= 10) {
+        total *= 0.8;
+      } else if (bookSum >= 5) {
+        total *= 0.9;
+      }
+
+      document.getElementById("result").innerText = `총 가격: ${Math.round(total)}원`;
+    }
+
+    window.onload = calculatePrice;
+  </script>
+</body>
+</html>
