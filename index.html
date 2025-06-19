@@ -14,60 +14,99 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
+    /* 테마 컬러 변수 */
     :root {
       --primary: #0d6efd;
+      --secondary: #6c757d;
+      --success: #198754;
+      --info: #0dcaf0;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --kakao-yellow: #FFEB00;
       --bg: #f8f9fa;
       --text: #343a40;
       --card-bg: #ffffff;
       --card-hover: rgba(0, 0, 0, 0.1);
-      --badge-warning-bg: #ffc107;
-      --badge-warning-text: #212529;
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --primary: #339af0;
+        --secondary: #adb5bd;
+        --success: #20c997;
+        --info: #64d9ff;
+        --warning: #e09f3e;
+        --danger: #ff6b6b;
+        --kakao-yellow: #FFEB00;
         --bg: #121212;
         --text: #e0e0e0;
         --card-bg: #1e1e1e;
         --card-hover: rgba(255, 255, 255, 0.1);
-        --badge-warning-bg: #e09f3e;
-        --badge-warning-text: #000000;
       }
     }
 
     body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: var(--bg); color: var(--text); }
-    h1 { font-weight: 700; letter-spacing: -0.5px; }
-    .card { background-color: var(--card-bg); transition: transform .2s, box-shadow .2s; }
+    h1 { font-weight: 700; letter-spacing: -0.5px; color: var(--primary); }
+
+    .card { background-color: var(--card-bg); border-top: 4px solid var(--info); transition: transform .2s, box-shadow .2s; }
     .card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px var(--card-hover); }
-    .badge-warning { background-color: var(--badge-warning-bg); color: var(--badge-warning-text); }
-    .chat-btn { background-color: var(--primary); color: #fff; position: fixed; bottom: 1.5rem; right: 1.5rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform .2s; z-index:1000; }
+    .card-title i { color: var(--primary); }
+
+    .badge-warning { background-color: var(--warning); color: #212529; }
+
+    .btn-success { background-color: var(--success); border-color: var(--success); }
+    .btn-success:hover { background-color: #157347; }
+
+    .btn-secondary { background-color: var(--secondary); border-color: var(--secondary); }
+
+    .table thead { background-color: var(--secondary); }
+    .table thead th { color: #000; }
+
+    .result-text { color: var(--success); }
+
+    /* 카카오톡 버튼 스타일 수정 */
+    .chat-btn {
+      background-color: var(--kakao-yellow);
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform .2s; z-index:1000;
+    }
+    .chat-btn i { color: #000; font-size: 1.8rem; }
     .chat-btn:hover { transform: scale(1.1); }
-    .modal-body pre { white-space: pre-wrap; }
+
+    .modal-body pre { white-space: pre-wrap; background-color: var(--card-bg); padding: 1rem; border-radius: .5rem; }
   </style>
 </head>
 
 <body>
   <div class="container py-5">
     <div class="row g-4">
-      <div class="col-12 text-center"><h1 class="mb-4">스캔 서비스 가격 계산기</h1></div>
+      <!-- 헤더 -->
+      <div class="col-12 text-center">
+        <h1 class="mb-3">스캔 서비스 가격 계산기</h1>
+        <!-- 추가 이미지 배너 -->
+        <!-- <img src="https://via.placeholder.com/800x200?text=북스캔+서비스" alt="북스캔 서비스" class="img-fluid rounded mb-4"> -->
+      </div>
 
+      <!-- 서비스 안내 -->
       <div class="col-md-6">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title mb-3"><i class="bi bi-book-half me-2"></i>북스캔 서비스</h5>
             <p class="card-text mb-3">책을 PDF로 만들어 공간을 절약하고, 언제든 편하게 보관하세요!</p>
             <ul class="list-unstyled ps-3 mb-3">
-              <li class="mb-2"><i class="bi bi-file-earmark-text me-2"></i>OCR (검색 가능한 PDF 제공)</li>
-              <li class="mb-2"><i class="bi bi-aspect-ratio me-2"></i>고해상도(400dpi) 옵션</li>
-              <li class="mb-2"><i class="bi bi-percent me-2"></i>대량 스캔 할인</li>
-              <li class="mb-2"><i class="bi bi-cloud-upload me-2"></i>이메일 · 클라우드 전달</li>
-              <li class="mb-2"><i class="bi bi-clock-history me-2"></i>영도 지역 저녁 수령 가능</li>
+              <li class="mb-2"><i class="bi bi-file-earmark-text me-2 text-info"></i>OCR (검색 가능한 PDF 제공)</li>
+              <li class="mb-2"><i class="bi bi-aspect-ratio me-2 text-success"></i>고해상도(400dpi) 옵션</li>
+              <li class="mb-2"><i class="bi bi-percent me-2 text-warning"></i>대량 스캔 할인</li>
+              <li class="mb-2"><i class="bi bi-cloud-upload me-2 text-secondary"></i>이메일 · 클라우드 전달</li>
+              <li class="mb-2"><i class="bi bi-clock-history me-2 text-primary"></i>영도 지역 저녁 수령 가능</li>
             </ul>
             <span class="badge badge-warning">주의: 가로폭 240mm 이상 스캔 불가</span>
           </div>
         </div>
       </div>
 
+      <!-- 샘플 다운로드 -->
       <div class="col-md-6">
         <div class="card h-100 shadow-sm d-flex flex-column justify-content-between">
           <div class="card-body">
@@ -76,14 +115,15 @@
           </div>
           <div class="card-footer bg-transparent border-0">
             <div class="d-grid gap-2">
-              <a href="sample/300dpi_sample.pdf" target="_blank" class="btn btn-outline-primary">300dpi 샘플</a>
-              <a href="sample/400dpi_sample.pdf" target="_blank" class="btn btn-outline-primary">400dpi 샘플</a>
-              <a href="sample/ocr_sample.pdf" target="_blank" class="btn btn-outline-primary">OCR 샘플</a>
+              <a href="sample/300dpi_sample.pdf" target="_blank" class="btn btn-outline-info">300dpi 샘플</a>
+              <a href="sample/400dpi_sample.pdf" target="_blank" class="btn btn-outline-success">400dpi 샘플</a>
+              <a href="sample/ocr_sample.pdf" target="_blank" class="btn btn-outline-warning">OCR 샘플</a>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- 가격 계산 -->
       <div class="col-12">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -91,14 +131,14 @@
               <h5 class="card-title mb-2"><i class="bi bi-calculator me-2"></i>가격 계산</h5>
               <div class="btn-group mb-2">
                 <button class="btn btn-success" onclick="addRow()"><i class="bi bi-plus-lg me-1"></i>줄 추가</button>
-                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#estimateModal" onclick="prepareEstimate()"><i class="bi bi-clipboard me-1"></i>견적서 복사</button>
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#estimateModal" onclick="prepareEstimate()"><i class="bi bi-clipboard me-1"></i>견적서 보기/복사</button>
               </div>
               <div id="discountInfo" class="fs-6 text-danger mb-2"></div>
-              <div id="result" class="fs-4 fw-semibold text-primary mb-2">총 가격: 0원</div>
+              <div id="result" class="fs-4 fw-semibold result-text mb-2">총 가격: 0원</div>
             </div>
             <div class="table-responsive mb-3">
               <table class="table table-bordered align-middle text-center" id="bookTable">
-                <thead class="table-light">
+                <thead>
                   <tr><th>권 수</th><th>쪽 수</th><th>OCR</th><th>고해상도</th><th>개별 가격</th><th>삭제</th></tr>
                 </thead>
                 <tbody>
@@ -124,22 +164,22 @@
   <div class="modal fade" id="estimateModal" tabindex="-1" aria-labelledby="estimateModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="estimateModalLabel">견적서</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+        <div class="modal-header" style="background-color: var(--info); color: #fff;">
+          <h5 class="modal-title" id="estimateModalLabel"><i class="bi bi-journal-text me-2"></i>견적서</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
         </div>
         <div class="modal-body">
           <pre id="estimateContent"></pre>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="copyEstimate()">클립보드에 복사</button>
+          <button type="button" class="btn btn-info" onclick="copyEstimate()">클립보드에 복사</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 플로팅 채팅 버튼 -->
+  <!-- 플로팅 카카오톡 채팅 버튼 -->
   <a href="https://open.kakao.com/o/saMv4uCh" target="_blank" class="chat-btn"><i class="bi bi-chat-dots-fill"></i></a>
 
   <!-- Bootstrap JS -->
