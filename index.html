@@ -326,17 +326,28 @@
       const p = +row.querySelector(".pageCount").value;
       const o = row.querySelector(".ocr").checked;
       const h = row.querySelector(".highRes").checked;
-      let base = 0;
-      for (let i = 0; i < c; i++) {
-        let price = 3000 + (p > 100 ? Math.ceil((p - 100) / 100) * 2000 : 0);
-        if (o) price += 2000;
-        if (h) price += 2000;
-        base += price;
+
+      // ▷ 변경된 기본 가격 로직
+      let perBookPrice;
+      if (p <= 300) {
+        perBookPrice = 4000;
+      } else {
+        perBookPrice = 4000 + Math.ceil((p - 300) / 100) * 1000;
       }
-      row.querySelector(".individualPrice").innerText = `${Math.round(base)}원`;
+
+      // 옵션 가격 유지
+      if (o) perBookPrice += 2000;
+      if (h) perBookPrice += 2000;
+
+      // 권 수 반영
+      const base = perBookPrice * c;
+      row.querySelector(".individualPrice").innerText = `${base}원`;
+
       totalBase += base;
       bookSum += c;
     });
+
+    // 기존 할인 로직 그대로
     let discountRate = 0;
     if (bookSum >= 10) discountRate = 0.2;
     else if (bookSum >= 5) discountRate = 0.1;
