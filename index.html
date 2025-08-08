@@ -8,7 +8,7 @@
 
   <!-- 환경 분기: 모바일 vs 데스크탑 클래스 추가 -->
   <script>
-    (function() {
+    (function () {
       const isMobile = /Mobi|Android/i.test(navigator.userAgent);
       document.documentElement.classList.add(isMobile ? 'mobile-env' : 'desktop-env');
     })();
@@ -19,7 +19,9 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+    rel="stylesheet">
 
   <style>
     /* 기본 테마 변수 */
@@ -58,57 +60,120 @@
       background-color: var(--bg);
       color: var(--text);
     }
+
     h1 {
       font-weight: 700;
       letter-spacing: -0.5px;
       color: var(--primary);
     }
+
     .card {
       background-color: var(--card-bg);
       border-top: 4px solid var(--info);
       transition: transform .2s, box-shadow .2s;
     }
+
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 6px 20px var(--card-hover);
     }
-    .card-title i { color: var(--primary); }
+
+    .card-title i {
+      color: var(--primary);
+    }
+
     .badge-warning {
       background-color: var(--warning);
       color: #212529;
     }
+
     .btn-success {
       background-color: var(--success);
       border-color: var(--success);
     }
-    .btn-success:hover { background-color: #157347; }
+
+    .btn-success:hover {
+      background-color: #157347;
+    }
+
     .btn-secondary {
       background-color: var(--secondary);
       border-color: var(--secondary);
     }
-    .result-text { color: var(--success); }
+
+    .result-text {
+      color: var(--success);
+    }
+
     .chat-btn {
       background-color: var(--kakao-yellow);
-      position: fixed; bottom: 1.5rem; right: 1.5rem;
-      width: 60px; height: 60px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: transform .2s; z-index:1000;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform .2s;
+      z-index: 1000;
     }
-    .chat-btn i { color: #000; font-size: 1.8rem; }
-    .chat-btn:hover { transform: scale(1.1); }
+
+    .chat-btn i {
+      color: #000;
+      font-size: 1.8rem;
+    }
+
+    .chat-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* 고정 견적 버튼 (모든 환경에서 표시) */
+    .estimate-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform .2s;
+      z-index: 1000;
+    }
+
+    .estimate-btn i {
+      font-size: 1.5rem;
+    }
+
+    .estimate-btn:hover {
+      transform: scale(1.1);
+      background-color: var(--primary);
+    }
+
+    /* 모바일에서만 견적 버튼 표시 (기존 코드 제거) */
     .modal-body pre {
       white-space: pre-wrap;
       background-color: var(--card-bg);
-      padding: 1rem; border-radius: .5rem;
+      padding: 1rem;
+      border-radius: .5rem;
     }
 
     /* 토글 버튼 대비 강화 */
     html.dark-mode .btn-outline-secondary {
-      color: #f5f5f5 !important; border-color: #6c757d !important;
+      color: #f5f5f5 !important;
+      border-color: #6c757d !important;
     }
+
     html.dark-mode .btn-outline-secondary:hover {
-      background-color: rgba(255,255,255,0.1) !important;
+      background-color: rgba(255, 255, 255, 0.1) !important;
     }
 
     /* 카드·모달 텍스트 밝게 */
@@ -120,33 +185,196 @@
     /* 다크모드용 테이블 기본 덮어쓰기 */
     html.dark-mode .table.table-bordered {
       background-color: var(--card-bg) !important;
-    }
-
-    /* 모바일 환경용 테이블 헤더 색 */
-    html.dark-mode.mobile-env .table.table-bordered thead {
-      background-color: #1f1f1f !important;
-    }
-    html.dark-mode.mobile-env .table.table-bordered thead th {
       color: var(--text) !important;
-      border-color: #333 !important;
     }
 
-    /* 데스크탑 환경용 테이블 헤더 색 */
-    html.dark-mode.desktop-env .table.table-bordered thead {
-      background-color: #2c2c2c !important;
-    }
-    html.dark-mode.desktop-env .table.table-bordered thead th {
-      color: var(--text) !important;
-      border-color: #444 !important;
+    /* 다크모드 테이블 헤더 색상 개선 */
+    html.dark-mode .table.table-bordered thead {
+      background-color: #2a2a2a !important;
     }
 
-    /* 행, 셀 색상 공통 */
+    html.dark-mode .table.table-bordered thead th {
+      color: #ffffff !important;
+      border-color: #404040 !important;
+      font-weight: 600;
+      background-color: #2a2a2a !important;
+    }
+
+    /* 라이트모드에서 테이블 헤더 */
+    .table.table-bordered thead {
+      background-color: #f8f9fa;
+    }
+
+    .table.table-bordered thead th {
+      color: #343a40 !important;
+      border-color: #dee2e6;
+      font-weight: 600;
+      background-color: #f8f9fa !important;
+    }
+
+    /* 다크모드 테이블 바디 색상 개선 */
     html.dark-mode .table.table-bordered tbody tr {
-      background-color: var(--card-bg) !important;
+      background-color: #1e1e1e !important;
     }
+
     html.dark-mode .table.table-bordered tbody td {
+      color: #ffffff !important;
+      border-color: #404040 !important;
+      background-color: #1e1e1e !important;
+    }
+
+    /* 다크모드 입력 필드 개선 */
+    html.dark-mode .table input.form-control {
+      background-color: #2d2d2d !important;
+      border-color: #555 !important;
+      color: #ffffff !important;
+    }
+
+    html.dark-mode .table input.form-control:focus {
+      background-color: #3d3d3d !important;
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 0.2rem rgba(51, 154, 240, 0.25) !important;
+      color: #ffffff !important;
+    }
+
+    /* 다크모드 체크박스 개선 */
+    html.dark-mode .table input[type="checkbox"] {
+      background-color: #2d2d2d !important;
+      border-color: #666 !important;
+      filter: brightness(1.2) contrast(1.1);
+    }
+
+    html.dark-mode .table input[type="checkbox"]:checked {
+      background-color: var(--primary) !important;
+      border-color: var(--primary) !important;
+    }
+
+    /* 다크모드 개별 가격 텍스트 강화 */
+    html.dark-mode .table .individualPrice {
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+
+    /* 다크모드 버튼 개선 */
+    html.dark-mode .table .btn-danger {
+      background-color: #dc3545 !important;
+      border-color: #dc3545 !important;
+      color: #ffffff !important;
+    }
+
+    html.dark-mode .table .btn-danger:hover {
+      background-color: #c82333 !important;
+      border-color: #bd2130 !important;
+    }
+
+    /* 다크모드 테이블 푸터 버튼 */
+    html.dark-mode .table tfoot .btn-success {
+      background-color: var(--success) !important;
+      border-color: var(--success) !important;
+      color: #ffffff !important;
+    }
+    
+    /* 다크모드 테이블 푸터 셀 */
+    html.dark-mode .table tfoot td {
+      background-color: #1e1e1e !important;
+      border-color: #404040 !important;
+    }
+
+    /* 다크모드 할인율 카드 */
+    html.dark-mode .card.border-success .card-body.bg-light {
+      background-color: #2a2a2a !important;
       color: var(--text) !important;
-      border-color: #444 !important;
+    }
+
+    html.dark-mode .card.border-success .bg-white {
+      background-color: #3a3a3a !important;
+      color: var(--text) !important;
+    }
+
+    /* 다크모드 새로운 할인 카드 */
+    html.dark-mode .discount-card .discount-highlight {
+      background: linear-gradient(135deg, #1e5631 0%, #155e63 100%) !important;
+    }
+
+    html.dark-mode .discount-item .bg-white {
+      background-color: #2d2d2d !important;
+      color: var(--text) !important;
+    }
+
+    /* 할인율 카드 애니메이션 */
+    .discount-card {
+      animation: fadeInUp 0.6s ease-out;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .discount-item {
+      animation: scaleIn 0.8s ease-out;
+      transition: transform 0.2s ease;
+    }
+
+    .discount-item:hover {
+      transform: translateY(-5px) scale(1.05);
+    }
+
+    .discount-percentage {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-3px);
+      }
+      60% {
+        transform: translateY(-2px);
+      }
+    }
+
+    /* 그라데이션 배경 효과 */
+    .discount-highlight {
+      background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .discount-highlight::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
   </style>
 </head>
@@ -164,6 +392,46 @@
       <!-- 헤더 -->
       <div class="col-12 text-center">
         <h1 class="mb-3">스캔 서비스 가격 계산기</h1>
+      </div>
+
+      <!-- 할인율 안내 -->
+      <div class="col-12">
+        <div class="card shadow-lg border-success discount-card">
+          <div class="card-body text-center discount-highlight" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+            <h3 class="card-title text-white mb-4">
+              <i class="bi bi-star-fill me-2" style="color: #ffd700;"></i>💰 대량 스캔 특별 할인 💰
+            </h3>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="discount-item p-4 bg-white rounded-3 border shadow-sm">
+                  <h1 class="discount-percentage text-success mb-2" style="font-size: 3rem; font-weight: bold;">5%</h1>
+                  <p class="mb-1 fw-bold fs-5">5권 이상</p>
+                  <small class="text-muted">첫 할인 혜택!</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="discount-item p-4 bg-white rounded-3 border shadow-sm">
+                  <h1 class="discount-percentage text-warning mb-2" style="font-size: 3rem; font-weight: bold;">10%</h1>
+                  <p class="mb-1 fw-bold fs-5">10권 이상</p>
+                  <small class="text-muted">인기 할인!</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="discount-item p-4 bg-white rounded-3 border shadow-sm">
+                  <h1 class="discount-percentage text-danger mb-2" style="font-size: 3rem; font-weight: bold;">15%</h1>
+                  <p class="mb-1 fw-bold fs-5">20권 이상</p>
+                  <small class="text-muted">최대 할인!</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <p class="text-white mb-0 fs-5">
+                <i class="bi bi-lightning-fill me-2" style="color: #ffd700;"></i>
+                <strong>많이 스캔할수록 더 많이 절약하세요!</strong>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- 서비스 안내 -->
@@ -239,18 +507,48 @@
               </table>
             </div>
             <p class="small text-muted mt-2">* OCR/고해상도 옵션은 각 +2,000원씩 추가됩니다.</p>
+            <div class="mt-3">
+              <h6 class="text-info"><i class="bi bi-list-ul me-2"></i>목차 작성 옵션</h6>
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle text-center">
+                  <thead class="table-light">
+                    <tr>
+                      <th>페이지 범위</th>
+                      <th>목차 작성비</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1 ~ 100쪽</td>
+                      <td>5,000원</td>
+                    </tr>
+                    <tr>
+                      <td>101 ~ 200쪽</td>
+                      <td>8,000원</td>
+                    </tr>
+                    <tr>
+                      <td>201 ~ 300쪽</td>
+                      <td>11,000원</td>
+                    </tr>
+                    <tr>
+                      <td>301쪽 이상</td>
+                      <td>15,000원</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 가격 계산 -->
-      <div class="col-12">
+      <div class="col-12" id="price-calculator">
         <div class="card shadow-sm">
           <div class="card-body">
             <div class="d-flex mb-3 justify-content-between align-items-center flex-wrap">
               <h5 class="card-title mb-2"><i class="bi bi-calculator me-2"></i>가격 계산</h5>
               <div class="btn-group mb-2">
-                <button class="btn btn-success" onclick="addRow()"><i class="bi bi-plus-lg me-1"></i>줄 추가</button>
                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#estimateModal"
                   onclick="prepareEstimate()"><i class="bi bi-clipboard me-1"></i>견적서 보기/복사</button>
               </div>
@@ -265,6 +563,7 @@
                     <th>쪽 수</th>
                     <th>OCR</th>
                     <th>고해상도</th>
+                    <th>목차</th>
                     <th>개별 가격</th>
                     <th>삭제</th>
                   </tr>
@@ -275,10 +574,20 @@
                     <td><input type="number" class="form-control pageCount" min="1" value="100"></td>
                     <td><input type="checkbox" class="form-check-input ocr"></td>
                     <td><input type="checkbox" class="form-check-input highRes"></td>
-                    <td class="individualPrice">3000원</td>
+                    <td><input type="checkbox" class="form-check-input toc"></td>
+                    <td class="individualPrice">9000원</td>
                     <td><button class="btn btn-sm btn-danger" onclick="removeRow(this)">삭제</button></td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="7" class="p-2">
+                      <button class="btn btn-success w-100" onclick="addRow()">
+                        <i class="bi bi-plus-lg me-2"></i>책 추가
+                      </button>
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -306,129 +615,155 @@
     </div>
   </div>
 
+  <!-- 고정 견적 버튼 -->
+  <button class="estimate-btn" onclick="scrollToCalculator()">
+    <i class="bi bi-calculator"></i>
+  </button>
+
   <!-- 카카오톡 채팅 버튼 -->
   <a href="https://open.kakao.com/o/saMv4uCh" target="_blank" class="chat-btn"><i class="bi bi-chat-dots-fill"></i></a>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  // 1) 환경 분기: 모바일 vs 데스크탑 클래스 추가
-  (function() {
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    document.documentElement.classList.add(isMobile ? 'mobile-env' : 'desktop-env');
-  })();
+    // 1) 환경 분기: 모바일 vs 데스크탑 클래스 추가
+    (function () {
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      document.documentElement.classList.add(isMobile ? 'mobile-env' : 'desktop-env');
+    })();
 
-  // 2) 다크모드 토글 & 로컬 저장
-  const rootEl = document.documentElement;
-  const toggleBtn = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
+    // 2) 다크모드 토글 & 로컬 저장
+    const rootEl = document.documentElement;
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
 
-  if (localStorage.getItem('theme') === 'dark') {
-    rootEl.classList.add('dark-mode');
-    themeIcon.className = 'bi bi-sun-fill';
-  }
-
-  toggleBtn.addEventListener('click', () => {
-    const isDark = rootEl.classList.toggle('dark-mode');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    themeIcon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
-  });
-
-  // 3) 가격 계산 로직
-  let lastEstimateText = '';
-  document.addEventListener("DOMContentLoaded", calculatePrice);
-  document.getElementById("bookTable").addEventListener("input", calculatePrice);
-  document.getElementById("bookTable").addEventListener("change", calculatePrice);
-
-  function addRow() {
-    const tbody = document.querySelector("#bookTable tbody");
-    const newRow = tbody.rows[0].cloneNode(true);
-    newRow.querySelectorAll("input").forEach(input => {
-      if (input.type === "number")
-        input.value = input.classList.contains("bookCount") ? 1 : 100;
-      if (input.type === "checkbox")
-        input.checked = false;
-    });
-    newRow.querySelector(".individualPrice").innerText = "3000원";
-    tbody.appendChild(newRow);
-    calculatePrice();
-  }
-
-  function removeRow(btn) {
-    const tbody = document.querySelector("#bookTable tbody");
-    if (tbody.rows.length > 1)
-      btn.closest("tr").remove();
-    calculatePrice();
-  }
-
-  function calculatePrice() {
-    let totalBase = 0, bookSum = 0;
-    document.querySelectorAll("#bookTable tbody tr").forEach(row => {
-      const c = +row.querySelector(".bookCount").value;
-      const p = +row.querySelector(".pageCount").value;
-      const o = row.querySelector(".ocr").checked;
-      const h = row.querySelector(".highRes").checked;
-
-      // ▷ 변경된 기본 가격 로직
-      let perBookPrice;
-      if (p <= 300) {
-        perBookPrice = 4000;
-      } else {
-        perBookPrice = 4000 + Math.ceil((p - 300) / 100) * 1000;
-      }
-
-      // 옵션 가격 유지
-      if (o) perBookPrice += 2000;
-      if (h) perBookPrice += 2000;
-
-      // 권 수 반영
-      const base = perBookPrice * c;
-      row.querySelector(".individualPrice").innerText = `${base}원`;
-
-      totalBase += base;
-      bookSum += c;
-    });
-
-    // 기존 할인 로직 그대로
-    let discountRate = 0;
-    if (bookSum >= 10) discountRate = 0.2;
-    else if (bookSum >= 5) discountRate = 0.1;
-
-    const discountAmount = Math.round(totalBase * discountRate);
-    const total = Math.round(totalBase * (1 - discountRate));
-
-    document.getElementById("result").innerText = `총 가격: ${total}원`;
-    document.getElementById("discountInfo").innerText =
-      discountRate > 0
-        ? `할인율: ${discountRate * 100}% 적용 (절약 ${discountAmount}원)`
-        : '';
-  }
-
-  function prepareEstimate() {
-    calculatePrice();
-    let text = "[북스캔 서비스 견적서]\n";
-    document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
-      const c = row.querySelector(".bookCount").value;
-      const p = row.querySelector(".pageCount").value;
-      const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
-      const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
-      const price = row.querySelector(".individualPrice").innerText;
-      text += `줄 ${idx + 1}: ${c}권, ${p}쪽, 옵션: ${o}${h}, 가격: ${price}\n`;
-    });
-    text += document.getElementById("result").innerText + '\n';
-    if (document.getElementById("discountInfo").innerText) {
-      text += `(${document.getElementById("discountInfo").innerText})\n`;
+    if (localStorage.getItem('theme') === 'dark') {
+      rootEl.classList.add('dark-mode');
+      themeIcon.className = 'bi bi-sun-fill';
     }
-    document.getElementById("estimateContent").innerText = text;
-    lastEstimateText = text;
-  }
 
-  function copyEstimate() {
-    navigator.clipboard.writeText(lastEstimateText).then(() => {
-      alert('견적서가 클립보드에 복사되었습니다.');
+    toggleBtn.addEventListener('click', () => {
+      const isDark = rootEl.classList.toggle('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      themeIcon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
     });
-  }
-</script>
+
+    // 3) 가격 계산 로직
+    let lastEstimateText = '';
+    document.addEventListener("DOMContentLoaded", calculatePrice);
+    document.getElementById("bookTable").addEventListener("input", calculatePrice);
+    document.getElementById("bookTable").addEventListener("change", calculatePrice);
+
+    function addRow() {
+      const tbody = document.querySelector("#bookTable tbody");
+      const newRow = tbody.rows[0].cloneNode(true);
+      newRow.querySelectorAll("input").forEach(input => {
+        if (input.type === "number")
+          input.value = input.classList.contains("bookCount") ? 1 : 100;
+        if (input.type === "checkbox")
+          input.checked = false;
+      });
+      newRow.querySelector(".individualPrice").innerText = "9000원";
+      tbody.appendChild(newRow);
+      calculatePrice();
+    }
+
+    function removeRow(btn) {
+      const tbody = document.querySelector("#bookTable tbody");
+      if (tbody.rows.length > 1)
+        btn.closest("tr").remove();
+      calculatePrice();
+    }
+
+    function calculatePrice() {
+      let totalBase = 0, bookSum = 0;
+      document.querySelectorAll("#bookTable tbody tr").forEach(row => {
+        const c = +row.querySelector(".bookCount").value;
+        const p = +row.querySelector(".pageCount").value;
+        const o = row.querySelector(".ocr").checked;
+        const h = row.querySelector(".highRes").checked;
+        const t = row.querySelector(".toc").checked;
+
+        // ▷ 변경된 기본 가격 로직
+        let perBookPrice;
+        if (p <= 300) {
+          perBookPrice = 4000;
+        } else {
+          perBookPrice = 4000 + Math.ceil((p - 300) / 100) * 1000;
+        }
+
+        // 옵션 가격
+        if (o) perBookPrice += 2000;
+        if (h) perBookPrice += 2000;
+
+        // 목차 가격 (구간별 고정가격)
+        if (t) {
+          let tocPrice;
+          if (p <= 100) tocPrice = 5000;
+          else if (p <= 200) tocPrice = 8000;
+          else if (p <= 300) tocPrice = 11000;
+          else tocPrice = 15000;
+          perBookPrice += tocPrice;
+        }
+
+        // 권 수 반영
+        const base = perBookPrice * c;
+        row.querySelector(".individualPrice").innerText = `${base}원`;
+
+        totalBase += base;
+        bookSum += c;
+      });
+
+      // 변경된 할인 로직
+      let discountRate = 0;
+      if (bookSum >= 20) discountRate = 0.15;
+      else if (bookSum >= 10) discountRate = 0.1;
+      else if (bookSum >= 5) discountRate = 0.05;
+
+      const discountAmount = Math.round(totalBase * discountRate);
+      const total = Math.round(totalBase * (1 - discountRate));
+
+      document.getElementById("result").innerText = `총 가격: ${total}원`;
+      document.getElementById("discountInfo").innerText =
+        discountRate > 0
+          ? `할인율: ${discountRate * 100}% 적용 (절약 ${discountAmount}원)`
+          : '';
+    }
+
+    function prepareEstimate() {
+      calculatePrice();
+      let text = "[북스캔 서비스 견적서]\n";
+      document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
+        const c = row.querySelector(".bookCount").value;
+        const p = row.querySelector(".pageCount").value;
+        const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
+        const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
+        const t = row.querySelector(".toc").checked ? '목차 ' : '';
+        const price = row.querySelector(".individualPrice").innerText;
+        text += `줄 ${idx + 1}: ${c}권, ${p}쪽, 옵션: ${o}${h}${t}, 가격: ${price}\n`;
+      });
+      text += document.getElementById("result").innerText + '\n';
+      if (document.getElementById("discountInfo").innerText) {
+        text += `(${document.getElementById("discountInfo").innerText})\n`;
+      }
+      document.getElementById("estimateContent").innerText = text;
+      lastEstimateText = text;
+    }
+
+    function copyEstimate() {
+      navigator.clipboard.writeText(lastEstimateText).then(() => {
+        alert('견적서가 클립보드에 복사되었습니다.');
+      });
+    }
+
+    function scrollToCalculator() {
+      calculatePrice(); // 가격 계산 실행
+      document.getElementById('price-calculator').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  </script>
 
 </body>
 
