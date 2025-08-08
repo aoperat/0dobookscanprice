@@ -376,6 +376,169 @@
       0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
       100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
+
+    /* 구매 욕구 자극 UI */
+    .recommendation-box {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-left: 4px solid var(--info);
+      padding: 12px 16px;
+      margin: 10px 0;
+      border-radius: 8px;
+      animation: slideInLeft 0.5s ease-out;
+    }
+
+    .bundle-offer {
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      border: 2px solid #ff9800;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      position: relative;
+      animation: pulse 2s infinite;
+    }
+
+    .urgency-banner {
+      background: linear-gradient(45deg, #ff5722, #ff7043);
+      color: white;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      text-align: center;
+      animation: urgent-blink 1.5s infinite;
+      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+    }
+
+    .progress-bar-custom {
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      height: 8px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4caf50, #8bc34a);
+      border-radius: 10px;
+      transition: width 0.8s ease-out;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    @keyframes urgent-blink {
+      0%, 50% { opacity: 1; }
+      25%, 75% { opacity: 0.8; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200px 0; }
+      100% { background-position: 200px 0; }
+    }
+
+    /* 다크모드 지원 */
+    html.dark-mode .recommendation-box {
+      background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+      color: #ffffff;
+    }
+
+    html.dark-mode .bundle-offer {
+      background: linear-gradient(135deg, #3e2723 0%, #5d4037 100%);
+      border-color: #ff9800;
+      color: #ffffff;
+    }
+
+    /* 툴팁 스타일 */
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .help-icon {
+      color: #6c757d;
+      cursor: help;
+      font-size: 0.8rem;
+      margin-left: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .help-icon:hover {
+      color: var(--primary);
+    }
+
+    .custom-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      pointer-events: none;
+    }
+
+    .custom-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #333;
+    }
+
+    .tooltip-container:hover .custom-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    html.dark-mode .custom-tooltip {
+      background-color: #555;
+      color: #fff;
+    }
+
+    html.dark-mode .custom-tooltip::after {
+      border-top-color: #555;
+    }
+
+    /* 모바일에서 툴팁 개선 */
+    @media (max-width: 768px) {
+      .custom-tooltip {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+        white-space: normal;
+        width: 200px;
+        text-align: center;
+      }
+      
+      .tooltip-container {
+        position: static;
+      }
+      
+      .custom-tooltip {
+        position: fixed;
+        bottom: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
   </style>
 </head>
 
@@ -428,6 +591,10 @@
               <p class="text-white mb-0 fs-5">
                 <i class="bi bi-lightning-fill me-2" style="color: #ffd700;"></i>
                 <strong>많이 스캔할수록 더 많이 절약하세요!</strong>
+              </p>
+              <p class="text-white mb-0 fs-6 mt-2">
+                <i class="bi bi-calendar-event me-2" style="color: #ffd700;"></i>
+                <strong>특가 기간: 8월 21일까지!</strong>
               </p>
             </div>
           </div>
@@ -552,36 +719,88 @@
                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#estimateModal"
                   onclick="prepareEstimate()"><i class="bi bi-clipboard me-1"></i>견적서 보기/복사</button>
               </div>
-              <div id="discountInfo" class="fs-6 text-danger mb-2"></div>
-              <div id="result" class="fs-4 fw-semibold result-text mb-2">총 가격: 0원</div>
+              <div id="discountInfo" class="fs-6 text-danger mb-2" style="min-height: 1.5rem;">&nbsp;</div>
+              <div id="result" class="fs-4 fw-semibold result-text mb-2" style="min-height: 2rem;">총 가격: 0원</div>
+              
+              <!-- 긴급성 메시지 -->
+              <div id="urgencyMessage" class="urgency-banner" style="display: none;">
+                ⏰ <strong>특가 종료까지 2시간 30분!</strong> 지금 주문하세요!
+              </div>
+              
+              <!-- 번들 할인 제안 -->
+              <div id="bundleOffer" class="bundle-offer" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>🎯 <span id="bundleText">2권 더 추가하면 10% 할인!</span></strong>
+                    <div class="progress-bar-custom">
+                      <div id="discountProgress" class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <small class="text-muted">할인까지 <span id="booksNeeded">2권</span> 더 필요해요!</small>
+                  </div>
+                  <div class="text-end">
+                    <div class="fs-5 fw-bold text-success">💰 <span id="potentialSavings">0</span>원 절약!</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 개인화된 추천 -->
+              <div id="recommendation" class="recommendation-box" style="display: none;">
+                <i class="bi bi-lightbulb text-warning me-2"></i>
+                <span id="recommendationText">📖 이런 두께의 책이라면 OCR 옵션을 추천해요!</span>
+              </div>
             </div>
             <div class="table-responsive mb-3">
               <table class="table table-bordered align-middle text-center" id="bookTable">
                 <thead>
                   <tr>
-                    <th>권 수</th>
                     <th>쪽 수</th>
-                    <th>OCR</th>
-                    <th>고해상도</th>
-                    <th>목차</th>
-                    <th>개별 가격</th>
+                    <th>
+                      <div class="tooltip-container">
+                        OCR
+                        <i class="bi bi-question-circle help-icon"></i>
+                        <div class="custom-tooltip">
+                          텍스트 검색이 가능한 PDF로 만들어드려요!<br>
+                          <small>단어나 문장을 바로 찾을 수 있어요</small>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="tooltip-container">
+                        고해상도
+                        <i class="bi bi-question-circle help-icon"></i>
+                        <div class="custom-tooltip">
+                          400dpi 고화질로 선명하게!<br>
+                          <small>이미지와 도표가 더 깨끗해요</small>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="tooltip-container">
+                        목차
+                        <i class="bi bi-question-circle help-icon"></i>
+                        <div class="custom-tooltip">
+                          PDF 목차를 자동 생성해드려요!<br>
+                          <small>원하는 페이지로 바로 이동</small>
+                        </div>
+                      </div>
+                    </th>
+                    <th>가격</th>
                     <th>삭제</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="number" class="form-control bookCount" min="1" value="1"></td>
-                    <td><input type="number" class="form-control pageCount" min="1" value="100"></td>
+                    <td><input type="number" class="form-control pageCount" min="1" value="100" placeholder="쪽수"></td>
                     <td><input type="checkbox" class="form-check-input ocr"></td>
                     <td><input type="checkbox" class="form-check-input highRes"></td>
                     <td><input type="checkbox" class="form-check-input toc"></td>
-                    <td class="individualPrice">9000원</td>
+                    <td class="individualPrice">4000원</td>
                     <td><button class="btn btn-sm btn-danger" onclick="removeRow(this)">삭제</button></td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="7" class="p-2">
+                    <td colspan="6" class="p-2">
                       <button class="btn btn-success w-100" onclick="addRow()">
                         <i class="bi bi-plus-lg me-2"></i>책 추가
                       </button>
@@ -648,43 +867,64 @@
       themeIcon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
     });
 
-    // 3) 가격 계산 로직
-    let lastEstimateText = '';
-    document.addEventListener("DOMContentLoaded", calculatePrice);
-    document.getElementById("bookTable").addEventListener("input", calculatePrice);
-    document.getElementById("bookTable").addEventListener("change", calculatePrice);
+  // 3) 가격 계산 로직
+  let lastEstimateText = '';
+  document.addEventListener("DOMContentLoaded", calculatePrice);
+  document.getElementById("bookTable").addEventListener("input", calculatePrice);
+  document.getElementById("bookTable").addEventListener("change", calculatePrice);
 
-    function addRow() {
-      const tbody = document.querySelector("#bookTable tbody");
-      const newRow = tbody.rows[0].cloneNode(true);
-      newRow.querySelectorAll("input").forEach(input => {
-        if (input.type === "number")
-          input.value = input.classList.contains("bookCount") ? 1 : 100;
-        if (input.type === "checkbox")
-          input.checked = false;
-      });
-      newRow.querySelector(".individualPrice").innerText = "9000원";
-      tbody.appendChild(newRow);
-      calculatePrice();
+  // 1분마다 긴급성 메시지 업데이트 (실시간 카운트다운)
+  setInterval(() => {
+    const bookSum = document.querySelectorAll("#bookTable tbody tr").length;
+    updateUrgencyMessage(bookSum);
+  }, 60000); // 1분마다 업데이트
+
+  // 엔터키로 줄 추가 기능
+  document.getElementById("bookTable").addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && e.target.classList.contains("pageCount")) {
+      const allPageInputs = document.querySelectorAll(".pageCount");
+      const lastPageInput = allPageInputs[allPageInputs.length - 1];
+      
+      // 마지막 쪽수 입력 필드에서 엔터를 눌렀을 때만 줄 추가
+      if (e.target === lastPageInput) {
+        e.preventDefault();
+        addRow();
+        // 새로 추가된 줄의 쪽수 입력에 포커스
+        setTimeout(() => {
+          const newPageInputs = document.querySelectorAll(".pageCount");
+          const newLastInput = newPageInputs[newPageInputs.length - 1];
+          newLastInput.focus();
+          newLastInput.select();
+        }, 100);
+      }
     }
-
-    function removeRow(btn) {
+  });  function addRow() {
+    const tbody = document.querySelector("#bookTable tbody");
+    const newRow = tbody.rows[0].cloneNode(true);
+    newRow.querySelectorAll("input").forEach(input => {
+      if (input.type === "number")
+        input.value = 100; // 기본 100쪽
+      if (input.type === "checkbox")
+        input.checked = false;
+    });
+    newRow.querySelector(".individualPrice").innerText = "4000원";
+    tbody.appendChild(newRow);
+    calculatePrice();
+  }    function removeRow(btn) {
       const tbody = document.querySelector("#bookTable tbody");
       if (tbody.rows.length > 1)
         btn.closest("tr").remove();
       calculatePrice();
     }
 
-    function calculatePrice() {
-      let totalBase = 0, bookSum = 0;
-      document.querySelectorAll("#bookTable tbody tr").forEach(row => {
-        const c = +row.querySelector(".bookCount").value;
-        const p = +row.querySelector(".pageCount").value;
-        const o = row.querySelector(".ocr").checked;
-        const h = row.querySelector(".highRes").checked;
-        const t = row.querySelector(".toc").checked;
-
-        // ▷ 변경된 기본 가격 로직
+  function calculatePrice() {
+    let totalBase = 0, bookSum = 0;
+    document.querySelectorAll("#bookTable tbody tr").forEach(row => {
+      const c = 1; // 한 줄에 한 권으로 고정
+      const p = +row.querySelector(".pageCount").value;
+      const o = row.querySelector(".ocr").checked;
+      const h = row.querySelector(".highRes").checked;
+      const t = row.querySelector(".toc").checked;        // ▷ 변경된 기본 가격 로직
         let perBookPrice;
         if (p <= 300) {
           perBookPrice = 4000;
@@ -724,33 +964,167 @@
       const total = Math.round(totalBase * (1 - discountRate));
 
       document.getElementById("result").innerText = `총 가격: ${total}원`;
-      document.getElementById("discountInfo").innerText =
+      document.getElementById("discountInfo").innerHTML =
         discountRate > 0
           ? `할인율: ${discountRate * 100}% 적용 (절약 ${discountAmount}원)`
-          : '';
+          : '&nbsp;'; // 공백 유지
+
+      // 마케팅 기능들 업데이트
+      updateMarketingMessages(bookSum, totalBase, discountRate);
     }
 
-    function prepareEstimate() {
-      calculatePrice();
-      let text = "[북스캔 서비스 견적서]\n";
-      document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
-        const c = row.querySelector(".bookCount").value;
-        const p = row.querySelector(".pageCount").value;
-        const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
-        const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
-        const t = row.querySelector(".toc").checked ? '목차 ' : '';
-        const price = row.querySelector(".individualPrice").innerText;
-        text += `줄 ${idx + 1}: ${c}권, ${p}쪽, 옵션: ${o}${h}${t}, 가격: ${price}\n`;
-      });
-      text += document.getElementById("result").innerText + '\n';
-      if (document.getElementById("discountInfo").innerText) {
-        text += `(${document.getElementById("discountInfo").innerText})\n`;
+    // 마케팅 메시지 업데이트 함수
+    function updateMarketingMessages(bookSum, totalBase, currentDiscountRate) {
+      updateBundleOffer(bookSum, totalBase);
+      updateRecommendations();
+      updateUrgencyMessage(bookSum);
+    }
+
+    // 번들 할인 제안
+    function updateBundleOffer(bookSum, totalBase) {
+      const bundleOffer = document.getElementById('bundleOffer');
+      const bundleText = document.getElementById('bundleText');
+      const booksNeeded = document.getElementById('booksNeeded');
+      const potentialSavings = document.getElementById('potentialSavings');
+      const discountProgress = document.getElementById('discountProgress');
+
+      let nextThreshold = 0;
+      let nextDiscount = 0;
+      let progressPercent = 0;
+
+      if (bookSum < 5) {
+        nextThreshold = 5;
+        nextDiscount = 0.05;
+        progressPercent = (bookSum / 5) * 100;
+        bundleText.textContent = `${5 - bookSum}권 더 추가하면 5% 할인!`;
+        booksNeeded.textContent = 5 - bookSum;
+      } else if (bookSum < 10) {
+        nextThreshold = 10;
+        nextDiscount = 0.1;
+        progressPercent = ((bookSum - 5) / 5) * 100;
+        bundleText.textContent = `${10 - bookSum}권 더 추가하면 10% 할인!`;
+        booksNeeded.textContent = 10 - bookSum;
+      } else if (bookSum < 20) {
+        nextThreshold = 20;
+        nextDiscount = 0.15;
+        progressPercent = ((bookSum - 10) / 10) * 100;
+        bundleText.textContent = `${20 - bookSum}권 더 추가하면 15% 할인!`;
+        booksNeeded.textContent = 20 - bookSum;
       }
-      document.getElementById("estimateContent").innerText = text;
-      lastEstimateText = text;
+
+      if (nextThreshold > 0 && bookSum < nextThreshold) {
+        const potentialSavingAmount = Math.round(totalBase * nextDiscount);
+        potentialSavings.textContent = potentialSavingAmount.toLocaleString();
+        discountProgress.style.width = `${Math.max(10, progressPercent)}%`;
+        bundleOffer.style.display = 'block';
+      } else {
+        bundleOffer.style.display = 'none';
+      }
     }
 
-    function copyEstimate() {
+    // 개인화된 추천
+    function updateRecommendations() {
+      const recommendation = document.getElementById('recommendation');
+      const recommendationText = document.getElementById('recommendationText');
+      const rows = document.querySelectorAll("#bookTable tbody tr");
+      
+      let hasRecommendation = false;
+      
+      rows.forEach((row, index) => {
+        const pages = +row.querySelector(".pageCount").value;
+        const hasOCR = row.querySelector(".ocr").checked;
+        const hasHighRes = row.querySelector(".highRes").checked;
+        const hasTOC = row.querySelector(".toc").checked;
+        
+        // OCR 추천 (300쪽 이상 + OCR 없음)
+        if (pages >= 300 && !hasOCR && !hasRecommendation) {
+          recommendationText.innerHTML = `📖 ${pages}쪽 두꺼운 책이라면 <strong>OCR 옵션</strong>을 추천해요! 나중에 검색이 가능합니다.`;
+          hasRecommendation = true;
+        }
+        // 고해상도 추천 (이미지/도표가 많을 것 같은 경우)
+        else if (pages >= 200 && !hasHighRes && !hasRecommendation) {
+          recommendationText.innerHTML = `📊 ${pages}쪽 전문서라면 <strong>고해상도 옵션</strong>으로 더 선명하게! 이미지와 도표가 선명해집니다.`;
+          hasRecommendation = true;
+        }
+        // 목차 추천 (두꺼운 책 + 목차 없음)
+        else if (pages >= 400 && !hasTOC && !hasRecommendation) {
+          recommendationText.innerHTML = `📚 ${pages}쪽 대용량 도서라면 <strong>목차 작성</strong>을 추천! 원하는 내용을 빠르게 찾을 수 있어요.`;
+          hasRecommendation = true;
+        }
+        // 올인원 패키지 추천
+        else if (pages >= 250 && (!hasOCR || !hasHighRes) && !hasRecommendation) {
+          recommendationText.innerHTML = `⭐ <strong>올인원 패키지</strong>는 어떠세요? OCR + 고해상도로 완벽한 디지털화!`;
+          hasRecommendation = true;
+        }
+      });
+      
+      recommendation.style.display = hasRecommendation ? 'block' : 'none';
+    }
+
+    // 긴급성 메시지
+    function updateUrgencyMessage(bookSum) {
+      const urgencyMessage = document.getElementById('urgencyMessage');
+      
+      // 특가 종료일 설정 (2025년 8월 21일 23:59:59)
+      const endDate = new Date('2025-08-21T23:59:59');
+      const now = new Date();
+      const timeDiff = endDate - now;
+      
+      // 특가 기간이 지났으면 메시지 숨김
+      if (timeDiff <= 0) {
+        urgencyMessage.style.display = 'none';
+        return;
+      }
+      
+      // 남은 시간 계산
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+      
+      let timeMessage = '';
+      if (days > 0) {
+        timeMessage = `${days}일 ${hours}시간 ${minutes}분`;
+      } else if (hours > 0) {
+        timeMessage = `${hours}시간 ${minutes}분`;
+      } else {
+        timeMessage = `${minutes}분`;
+      }
+      
+      const messages = [
+        `⏰ 특가 종료까지 ${timeMessage}! 지금 주문하세요!`,
+        `🔥 8월 21일까지 한정 특가! 남은 시간 ${timeMessage}`,
+        `⚡ 마감 임박! ${timeMessage} 후 정가로 복귀합니다!`,
+        `🎯 특별 할인 마감까지 ${timeMessage} 남았어요!`
+      ];
+      
+      // 책이 3권 이상일 때 긴급성 메시지 표시
+      if (bookSum >= 3) {
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        urgencyMessage.innerHTML = `<strong>${randomMessage}</strong>`;
+        urgencyMessage.style.display = 'block';
+      } else {
+        urgencyMessage.style.display = 'none';
+      }
+    }
+
+  function prepareEstimate() {
+    calculatePrice();
+    let text = "[북스캔 서비스 견적서]\n";
+    document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
+      const p = row.querySelector(".pageCount").value;
+      const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
+      const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
+      const t = row.querySelector(".toc").checked ? '목차 ' : '';
+      const price = row.querySelector(".individualPrice").innerText;
+      text += `책 ${idx + 1}: ${p}쪽, 옵션: ${o}${h}${t}, 가격: ${price}\n`;
+    });
+    text += document.getElementById("result").innerText + '\n';
+    if (document.getElementById("discountInfo").innerText) {
+      text += `(${document.getElementById("discountInfo").innerText})\n`;
+    }
+    document.getElementById("estimateContent").innerText = text;
+    lastEstimateText = text;
+  }    function copyEstimate() {
       navigator.clipboard.writeText(lastEstimateText).then(() => {
         alert('견적서가 클립보드에 복사되었습니다.');
       });
