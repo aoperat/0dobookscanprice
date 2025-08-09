@@ -406,6 +406,9 @@
       text-align: center;
       animation: urgent-blink 1.5s infinite;
       box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .progress-bar-custom {
@@ -517,8 +520,15 @@
       border-top-color: #555;
     }
 
-    /* 모바일에서 툴팁 개선 */
+    /* 모바일에서 긴급성 메시지 개선 */
     @media (max-width: 768px) {
+      .urgency-banner {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+        white-space: normal;
+        line-height: 1.3;
+      }
+      
       .custom-tooltip {
         font-size: 0.8rem;
         padding: 6px 10px;
@@ -647,33 +657,52 @@
                   <tr>
                     <th>페이지 범위</th>
                     <th>기본 가격</th>
+                    <th>OCR 옵션</th>
+                    <th>고해상도 옵션</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>1 ~ 300쪽</td>
                     <td>4,000원</td>
+                    <td>+2,000원</td>
+                    <td>+2,000원</td>
                   </tr>
                   <tr>
                     <td>301 ~ 400쪽</td>
                     <td>5,000원</td>
+                    <td>+2,000원</td>
+                    <td>+2,000원</td>
                   </tr>
                   <tr>
                     <td>401 ~ 500쪽</td>
                     <td>6,000원</td>
+                    <td>+2,000원</td>
+                    <td>+2,000원</td>
                   </tr>
                   <tr>
                     <td>501 ~ 600쪽</td>
                     <td>7,000원</td>
+                    <td>+2,000원</td>
+                    <td>+2,000원</td>
                   </tr>
                   <tr>
                     <td>601쪽 이상</td>
                     <td>기본 4,000원 + (페이지초과÷100)*1,000원</td>
+                    <td>+2,000원</td>
+                    <td>+2,000원</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p class="small text-muted mt-2">* OCR/고해상도 옵션은 각 +2,000원씩 추가됩니다.</p>
+            <div class="row mt-2">
+              <div class="col-md-6">
+                <p class="small text-info mb-1"><i class="bi bi-info-circle me-1"></i><strong>OCR 옵션:</strong> 텍스트 검색 가능한 PDF</p>
+              </div>
+              <div class="col-md-6">
+                <p class="small text-success mb-1"><i class="bi bi-aspect-ratio me-1"></i><strong>고해상도 옵션:</strong> 400dpi 고화질 스캔</p>
+              </div>
+            </div>
             <div class="mt-3">
               <h6 class="text-info"><i class="bi bi-list-ul me-2"></i>목차 작성 옵션</h6>
               <div class="table-responsive">
@@ -687,18 +716,26 @@
                   <tbody>
                     <tr>
                       <td>1 ~ 100쪽</td>
-                      <td>5,000원</td>
+                      <td>4,000원</td>
                     </tr>
                     <tr>
                       <td>101 ~ 200쪽</td>
-                      <td>8,000원</td>
+                      <td>6,000원</td>
                     </tr>
                     <tr>
                       <td>201 ~ 300쪽</td>
-                      <td>11,000원</td>
+                      <td>8,000원</td>
                     </tr>
                     <tr>
-                      <td>301쪽 이상</td>
+                      <td>301 ~ 500쪽</td>
+                      <td>10,000원</td>
+                    </tr>
+                    <tr>
+                      <td>501 ~ 800쪽</td>
+                      <td>12,000원</td>
+                    </tr>
+                    <tr>
+                      <td>801쪽 이상</td>
                       <td>15,000원</td>
                     </tr>
                   </tbody>
@@ -939,9 +976,11 @@
         // 목차 가격 (구간별 고정가격)
         if (t) {
           let tocPrice;
-          if (p <= 100) tocPrice = 5000;
-          else if (p <= 200) tocPrice = 8000;
-          else if (p <= 300) tocPrice = 11000;
+          if (p <= 100) tocPrice = 4000;
+          else if (p <= 200) tocPrice = 6000;
+          else if (p <= 300) tocPrice = 8000;
+          else if (p <= 500) tocPrice = 10000;
+          else if (p <= 800) tocPrice = 12000;
           else tocPrice = 15000;
           perBookPrice += tocPrice;
         }
@@ -1076,19 +1115,11 @@
         return;
       }
       
-      // 남은 시간 계산
-      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      // 총 시간과 분으로 계산 (일을 시간으로 환산)
+      const totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
       
-      let timeMessage = '';
-      if (days > 0) {
-        timeMessage = `${days}일 ${hours}시간 ${minutes}분`;
-      } else if (hours > 0) {
-        timeMessage = `${hours}시간 ${minutes}분`;
-      } else {
-        timeMessage = `${minutes}분`;
-      }
+      const timeMessage = `${totalHours}시간 ${minutes}분`;
       
       const messages = [
         `⏰ 특가 종료까지 ${timeMessage}! 지금 주문하세요!`,
