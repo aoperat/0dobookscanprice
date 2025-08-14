@@ -273,7 +273,7 @@
       border-color: var(--success) !important;
       color: #ffffff !important;
     }
-    
+
     /* 다크모드 테이블 푸터 셀 */
     html.dark-mode .table tfoot td {
       background-color: #1e1e1e !important;
@@ -325,6 +325,7 @@
         opacity: 0;
         transform: translateY(30px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -336,6 +337,7 @@
         opacity: 0;
         transform: scale(0.8);
       }
+
       to {
         opacity: 1;
         transform: scale(1);
@@ -343,12 +345,19 @@
     }
 
     @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
         transform: translateY(0);
       }
+
       40% {
         transform: translateY(-3px);
       }
+
       60% {
         transform: translateY(-2px);
       }
@@ -368,13 +377,18 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
       animation: shine 3s infinite;
     }
 
     @keyframes shine {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
     }
 
     /* 구매 욕구 자극 UI */
@@ -428,23 +442,50 @@
     }
 
     @keyframes slideInLeft {
-      from { transform: translateX(-20px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from {
+        transform: translateX(-20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.02);
+      }
     }
 
     @keyframes urgent-blink {
-      0%, 50% { opacity: 1; }
-      25%, 75% { opacity: 0.8; }
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      25%,
+      75% {
+        opacity: 0.8;
+      }
     }
 
     @keyframes shimmer {
-      0% { background-position: -200px 0; }
-      100% { background-position: 200px 0; }
+      0% {
+        background-position: -200px 0;
+      }
+
+      100% {
+        background-position: 200px 0;
+      }
     }
 
     /* 다크모드 지원 */
@@ -492,7 +533,7 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s, visibility 0.3s;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       pointer-events: none;
     }
 
@@ -528,7 +569,7 @@
         white-space: normal;
         line-height: 1.3;
       }
-      
+
       .custom-tooltip {
         font-size: 0.8rem;
         padding: 6px 10px;
@@ -536,11 +577,11 @@
         width: 200px;
         text-align: center;
       }
-      
+
       .tooltip-container {
         position: static;
       }
-      
+
       .custom-tooltip {
         position: fixed;
         bottom: auto;
@@ -570,7 +611,8 @@
       <!-- 할인율 안내 -->
       <div class="col-12">
         <div class="card shadow-lg border-success discount-card">
-          <div class="card-body text-center discount-highlight" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+          <div class="card-body text-center discount-highlight"
+            style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
             <h3 class="card-title text-white mb-4">
               <i class="bi bi-star-fill me-2" style="color: #ffd700;"></i>💰 대량 스캔 특별 할인 💰
             </h3>
@@ -697,10 +739,12 @@
             </div>
             <div class="row mt-2">
               <div class="col-md-6">
-                <p class="small text-info mb-1"><i class="bi bi-info-circle me-1"></i><strong>OCR 옵션:</strong> 텍스트 검색 가능한 PDF</p>
+                <p class="small text-info mb-1"><i class="bi bi-info-circle me-1"></i><strong>OCR 옵션:</strong> 텍스트 검색
+                  가능한 PDF</p>
               </div>
               <div class="col-md-6">
-                <p class="small text-success mb-1"><i class="bi bi-aspect-ratio me-1"></i><strong>고해상도 옵션:</strong> 400dpi 고화질 스캔</p>
+                <p class="small text-success mb-1"><i class="bi bi-aspect-ratio me-1"></i><strong>고해상도 옵션:</strong>
+                  400dpi 고화질 스캔</p>
               </div>
             </div>
             <div class="mt-3">
@@ -758,12 +802,12 @@
               </div>
               <div id="discountInfo" class="fs-6 text-danger mb-2" style="min-height: 1.5rem;">&nbsp;</div>
               <div id="result" class="fs-4 fw-semibold result-text mb-2" style="min-height: 2rem;">총 가격: 0원</div>
-              
+
               <!-- 긴급성 메시지 -->
               <div id="urgencyMessage" class="urgency-banner" style="display: none;">
                 ⏰ <strong>특가 종료까지 2시간 30분!</strong> 지금 주문하세요!
               </div>
-              
+
               <!-- 번들 할인 제안 -->
               <div id="bundleOffer" class="bundle-offer" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center">
@@ -779,7 +823,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- 개인화된 추천 -->
               <div id="recommendation" class="recommendation-box" style="display: none;">
                 <i class="bi bi-lightbulb text-warning me-2"></i>
@@ -904,64 +948,64 @@
       themeIcon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
     });
 
-  // 3) 가격 계산 로직
-  let lastEstimateText = '';
-  document.addEventListener("DOMContentLoaded", calculatePrice);
-  document.getElementById("bookTable").addEventListener("input", calculatePrice);
-  document.getElementById("bookTable").addEventListener("change", calculatePrice);
+    // 3) 가격 계산 로직
+    let lastEstimateText = '';
+    document.addEventListener("DOMContentLoaded", calculatePrice);
+    document.getElementById("bookTable").addEventListener("input", calculatePrice);
+    document.getElementById("bookTable").addEventListener("change", calculatePrice);
 
-  // 1분마다 긴급성 메시지 업데이트 (실시간 카운트다운)
-  setInterval(() => {
-    const bookSum = document.querySelectorAll("#bookTable tbody tr").length;
-    updateUrgencyMessage(bookSum);
-  }, 60000); // 1분마다 업데이트
+    // 1분마다 긴급성 메시지 업데이트 (실시간 카운트다운)
+    setInterval(() => {
+      const bookSum = document.querySelectorAll("#bookTable tbody tr").length;
+      updateUrgencyMessage(bookSum);
+    }, 60000); // 1분마다 업데이트
 
-  // 엔터키로 줄 추가 기능
-  document.getElementById("bookTable").addEventListener("keydown", function(e) {
-    if (e.key === "Enter" && e.target.classList.contains("pageCount")) {
-      const allPageInputs = document.querySelectorAll(".pageCount");
-      const lastPageInput = allPageInputs[allPageInputs.length - 1];
-      
-      // 마지막 쪽수 입력 필드에서 엔터를 눌렀을 때만 줄 추가
-      if (e.target === lastPageInput) {
-        e.preventDefault();
-        addRow();
-        // 새로 추가된 줄의 쪽수 입력에 포커스
-        setTimeout(() => {
-          const newPageInputs = document.querySelectorAll(".pageCount");
-          const newLastInput = newPageInputs[newPageInputs.length - 1];
-          newLastInput.focus();
-          newLastInput.select();
-        }, 100);
+    // 엔터키로 줄 추가 기능
+    document.getElementById("bookTable").addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && e.target.classList.contains("pageCount")) {
+        const allPageInputs = document.querySelectorAll(".pageCount");
+        const lastPageInput = allPageInputs[allPageInputs.length - 1];
+
+        // 마지막 쪽수 입력 필드에서 엔터를 눌렀을 때만 줄 추가
+        if (e.target === lastPageInput) {
+          e.preventDefault();
+          addRow();
+          // 새로 추가된 줄의 쪽수 입력에 포커스
+          setTimeout(() => {
+            const newPageInputs = document.querySelectorAll(".pageCount");
+            const newLastInput = newPageInputs[newPageInputs.length - 1];
+            newLastInput.focus();
+            newLastInput.select();
+          }, 100);
+        }
       }
-    }
-  });  function addRow() {
-    const tbody = document.querySelector("#bookTable tbody");
-    const newRow = tbody.rows[0].cloneNode(true);
-    newRow.querySelectorAll("input").forEach(input => {
-      if (input.type === "number")
-        input.value = 100; // 기본 100쪽
-      if (input.type === "checkbox")
-        input.checked = false;
-    });
-    newRow.querySelector(".individualPrice").innerText = "4000원";
-    tbody.appendChild(newRow);
-    calculatePrice();
-  }    function removeRow(btn) {
+    }); function addRow() {
+      const tbody = document.querySelector("#bookTable tbody");
+      const newRow = tbody.rows[0].cloneNode(true);
+      newRow.querySelectorAll("input").forEach(input => {
+        if (input.type === "number")
+          input.value = 100; // 기본 100쪽
+        if (input.type === "checkbox")
+          input.checked = false;
+      });
+      newRow.querySelector(".individualPrice").innerText = "4000원";
+      tbody.appendChild(newRow);
+      calculatePrice();
+    } function removeRow(btn) {
       const tbody = document.querySelector("#bookTable tbody");
       if (tbody.rows.length > 1)
         btn.closest("tr").remove();
       calculatePrice();
     }
 
-  function calculatePrice() {
-    let totalBase = 0, bookSum = 0;
-    document.querySelectorAll("#bookTable tbody tr").forEach(row => {
-      const c = 1; // 한 줄에 한 권으로 고정
-      const p = +row.querySelector(".pageCount").value;
-      const o = row.querySelector(".ocr").checked;
-      const h = row.querySelector(".highRes").checked;
-      const t = row.querySelector(".toc").checked;        // ▷ 변경된 기본 가격 로직
+    function calculatePrice() {
+      let totalBase = 0, bookSum = 0;
+      document.querySelectorAll("#bookTable tbody tr").forEach(row => {
+        const c = 1; // 한 줄에 한 권으로 고정
+        const p = +row.querySelector(".pageCount").value;
+        const o = row.querySelector(".ocr").checked;
+        const h = row.querySelector(".highRes").checked;
+        const t = row.querySelector(".toc").checked;        // ▷ 변경된 기본 가격 로직
         let perBookPrice;
         if (p <= 300) {
           perBookPrice = 4000;
@@ -1066,15 +1110,15 @@
       const recommendation = document.getElementById('recommendation');
       const recommendationText = document.getElementById('recommendationText');
       const rows = document.querySelectorAll("#bookTable tbody tr");
-      
+
       let hasRecommendation = false;
-      
+
       rows.forEach((row, index) => {
         const pages = +row.querySelector(".pageCount").value;
         const hasOCR = row.querySelector(".ocr").checked;
         const hasHighRes = row.querySelector(".highRes").checked;
         const hasTOC = row.querySelector(".toc").checked;
-        
+
         // OCR 추천 (300쪽 이상 + OCR 없음)
         if (pages >= 300 && !hasOCR && !hasRecommendation) {
           recommendationText.innerHTML = `📖 ${pages}쪽 두꺼운 책이라면 <strong>OCR 옵션</strong>을 추천해요! 나중에 검색이 가능합니다.`;
@@ -1096,38 +1140,38 @@
           hasRecommendation = true;
         }
       });
-      
+
       recommendation.style.display = hasRecommendation ? 'block' : 'none';
     }
 
     // 긴급성 메시지
     function updateUrgencyMessage(bookSum) {
       const urgencyMessage = document.getElementById('urgencyMessage');
-      
+
       // 특가 종료일 설정 (2025년 8월 21일 23:59:59)
       const endDate = new Date('2025-08-21T23:59:59');
       const now = new Date();
       const timeDiff = endDate - now;
-      
+
       // 특가 기간이 지났으면 메시지 숨김
       if (timeDiff <= 0) {
         urgencyMessage.style.display = 'none';
         return;
       }
-      
+
       // 총 시간과 분으로 계산 (일을 시간으로 환산)
       const totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-      
+
       const timeMessage = `${totalHours}시간 ${minutes}분`;
-      
+
       const messages = [
         `⏰ 특가 종료까지 ${timeMessage}! 지금 주문하세요!`,
         `🔥 8월 21일까지 한정 특가! 남은 시간 ${timeMessage}`,
         `⚡ 마감 임박! ${timeMessage} 후 정가로 복귀합니다!`,
         `🎯 특별 할인 마감까지 ${timeMessage} 남았어요!`
       ];
-      
+
       // 책이 3권 이상일 때 긴급성 메시지 표시
       if (bookSum >= 3) {
         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
@@ -1138,24 +1182,24 @@
       }
     }
 
-  function prepareEstimate() {
-    calculatePrice();
-    let text = "[북스캔 서비스 견적서]\n";
-    document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
-      const p = row.querySelector(".pageCount").value;
-      const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
-      const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
-      const t = row.querySelector(".toc").checked ? '목차 ' : '';
-      const price = row.querySelector(".individualPrice").innerText;
-      text += `책 ${idx + 1}: ${p}쪽, 옵션: ${o}${h}${t}, 가격: ${price}\n`;
-    });
-    text += document.getElementById("result").innerText + '\n';
-    if (document.getElementById("discountInfo").innerText) {
-      text += `(${document.getElementById("discountInfo").innerText})\n`;
-    }
-    document.getElementById("estimateContent").innerText = text;
-    lastEstimateText = text;
-  }    function copyEstimate() {
+    function prepareEstimate() {
+      calculatePrice();
+      let text = "[북스캔 서비스 견적서]\n";
+      document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
+        const p = row.querySelector(".pageCount").value;
+        const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
+        const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
+        const t = row.querySelector(".toc").checked ? '목차 ' : '';
+        const price = row.querySelector(".individualPrice").innerText;
+        text += `책 ${idx + 1}: ${p}쪽, 옵션: ${o}${h}${t}, 가격: ${price}\n`;
+      });
+      text += document.getElementById("result").innerText + '\n';
+      if (document.getElementById("discountInfo").innerText) {
+        text += `(${document.getElementById("discountInfo").innerText})\n`;
+      }
+      document.getElementById("estimateContent").innerText = text;
+      lastEstimateText = text;
+    } function copyEstimate() {
       navigator.clipboard.writeText(lastEstimateText).then(() => {
         alert('견적서가 클립보드에 복사되었습니다.');
       });

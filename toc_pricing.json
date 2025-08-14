@@ -1,0 +1,135 @@
+{
+  "pdfTocPricing": {
+    "title": "PDF 목차 생성 가격표",
+    "description": "목차 개수별 구간 가격 체계",
+    "lastUpdated": "2025-08-14",
+    "currency": "KRW",
+    "priceRanges": [
+      {
+        "id": 1,
+        "range": "1-10",
+        "minCount": 1,
+        "maxCount": 10,
+        "unitPrice": 300,
+        "minimumPrice": 3000,
+        "maxPrice": 3000,
+        "description": "최소 주문금액 적용",
+        "formula": "3,000원 고정 (최소 주문금액)",
+        "note": "개당 300원 계산보다 최소금액 우선 적용"
+      },
+      {
+        "id": 2,
+        "range": "11-30",
+        "minCount": 11,
+        "maxCount": 30,
+        "unitPrice": 250,
+        "basePrice": 3000,
+        "baseCount": 10,
+        "minPrice": 3250,
+        "maxPrice": 5000,
+        "description": "3,000원 + (목차수 - 10) × 250원",
+        "formula": "3,000 + (count - 10) × 250",
+        "note": "11개부터 개당 250원 적용"
+      },
+      {
+        "id": 3,
+        "range": "31-60",
+        "minCount": 31,
+        "maxCount": 60,
+        "unitPrice": 80,
+        "basePrice": 5000,
+        "baseCount": 30,
+        "minPrice": 5080,
+        "maxPrice": 8000,
+        "description": "5,000원 + (목차수 - 30) × 80원",
+        "formula": "5,000 + (count - 30) × 80",
+        "note": "31개부터 개당 80원 적용"
+      },
+      {
+        "id": 4,
+        "range": "61-100",
+        "minCount": 61,
+        "maxCount": 100,
+        "unitPrice": 60,
+        "basePrice": 8000,
+        "baseCount": 60,
+        "minPrice": 8060,
+        "maxPrice": 10400,
+        "description": "8,000원 + (목차수 - 60) × 60원",
+        "formula": "8,000 + (count - 60) × 60",
+        "note": "61개부터 개당 60원 적용"
+      },
+      {
+        "id": 5,
+        "range": "101+",
+        "minCount": 101,
+        "maxCount": null,
+        "unitPrice": 50,
+        "basePrice": 10400,
+        "baseCount": 100,
+        "minPrice": 10450,
+        "maxPrice": null,
+        "description": "10,400원 + (목차수 - 100) × 50원",
+        "formula": "10,400 + (count - 100) × 50",
+        "note": "101개부터 개당 50원 적용"
+      }
+    ],
+    "requirements": [
+      {
+        "id": 1,
+        "title": "명확한 목차 페이지 존재",
+        "description": "차례/목차 페이지가 명확히 있어야 함",
+        "priority": "critical",
+        "details": [
+          "페이지 번호 정확 매칭",
+          "누락이나 겹침 없을 것",
+          "계층 구조 명확"
+        ]
+      },
+      {
+        "id": 2,
+        "title": "텍스트 기반 PDF",
+        "description": "선택/복사가 되는 PDF (이미지 스캔본 제외)",
+        "priority": "high",
+        "details": [
+          "텍스트 선택 가능",
+          "검색 기능 작동",
+          "스캔본의 경우 OCR 후 작업"
+        ]
+      },
+      {
+        "id": 3,
+        "title": "페이지 번호 일치",
+        "description": "목차의 페이지 번호와 실제 페이지 일치",
+        "priority": "high",
+        "details": [
+          "목차 페이지 번호 정확성",
+          "실제 내용 페이지 확인",
+          "페이지 오류 최소화"
+        ]
+      },
+      {
+        "id": 4,
+        "title": "파일 크기 제한",
+        "description": "100MB 이하 권장 (대용량 별도 협의)",
+        "priority": "medium",
+        "details": [
+          "업로드 용량 제한",
+          "처리 속도 최적화",
+          "대용량 파일 별도 상담"
+        ]
+      }
+    ],
+    "serviceInfo": {
+      "processingTime": "1-3일",
+      "urgentProcessing": "당일 처리 가능 (별도 요금)",
+      "outputFormat": "PDF with bookmarks",
+      "compatibility": ["굿노트", "PDF 뷰어", "Adobe Reader"],
+      "qualityGuarantee": true
+    },
+    "discounts": {
+      "bulkDiscount": false,
+      "note": "개별 계산된 가격으로 할인 없음"
+    }
+  }
+}
