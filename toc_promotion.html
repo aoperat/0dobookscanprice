@@ -5,6 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF 목차 생성 서비스 - 클릭 한 번으로 원하는 페이지로!</title>
+    
+    <!-- SEO 메타 태그 -->
+    <meta name="description" content="굿노트, 플렉슬 완벽 호환 PDF 목차 생성 서비스. 클릭 한 번으로 원하는 페이지로 바로 이동! 학습 효율 300% UP">
+    <meta name="keywords" content="PDF목차, 북마크생성, 굿노트, 플렉슬, 디지털노트, 학습효율, PDF편집">
+    <meta name="author" content="북스캔 PDF 목차 생성 서비스">
+    
+    <!-- Open Graph (SNS 공유용) -->
+    <meta property="og:title" content="PDF 목차 생성 서비스 - 클릭 한 번으로 원하는 페이지로!">
+    <meta property="og:description" content="굿노트, 플렉슬 완벽 호환! 두꺼운 책도 목차 클릭만으로 바로 이동하는 혁신적인 서비스">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/toc_promotion.html">
+    <meta property="og:image" content="https://your-domain.com/images/toc-service-preview.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PDF 목차 생성 서비스">
+    <meta name="twitter:description" content="클릭 한 번으로 원하는 페이지로! 굿노트, 플렉슬 완벽 호환">
+    <meta name="twitter:image" content="https://your-domain.com/images/toc-service-preview.jpg">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -590,6 +608,13 @@
             right: 0;
             bottom: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .cta-section .container {
+            position: relative;
+            z-index: 10;
         }
 
         .cta-button {
@@ -613,6 +638,24 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
             color: var(--primary);
             border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* CTA 섹션 버튼 추가 스타일 */
+        .btn-outline-light {
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
+            border: 2px solid rgba(255, 255, 255, 0.8) !important;
+            color: white !important;
+            text-decoration: none !important;
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+            border-color: white !important;
+            color: white !important;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
         }
 
         /* 사용 사례 섹션 */
@@ -1118,7 +1161,7 @@
                 <a href="pdf_toc_generator.html" class="cta-button">
                     <i class="bi bi-calculator me-2"></i>가격 계산하기
                 </a>
-                <a href="https://open.kakao.com/o/saMv4uCh" target="_blank"
+                <a href="http://pf.kakao.com/_KGxevn/chat" target="_blank"
                     class="btn btn-outline-light btn-lg px-4 py-3">
                     <i class="bi bi-chat-dots-fill me-2"></i>카카오톡 상담
                 </a>
