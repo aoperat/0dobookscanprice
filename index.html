@@ -118,7 +118,7 @@
       justify-content: center;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       transition: transform .2s;
-      z-index: 1000;
+      z-index: 10000;
     }
 
     .chat-btn i {
@@ -528,13 +528,16 @@
       padding: 8px 12px;
       border-radius: 6px;
       font-size: 0.85rem;
-      white-space: nowrap;
-      z-index: 9999;
+      white-space: normal;
+      min-width: 200px;
+      max-width: 300px;
+      z-index: 99999;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s, visibility 0.3s;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       pointer-events: none;
+      text-align: center;
     }
 
     .custom-tooltip::after {
@@ -550,6 +553,18 @@
     .tooltip-container:hover .custom-tooltip {
       opacity: 1;
       visibility: visible;
+    }
+
+    /* 테이블 반응형 오버플로우 오버라이드 */
+    .table-responsive {
+      overflow: visible !important;
+    }
+
+    @media (max-width: 768px) {
+      .table-responsive {
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+      }
     }
 
     html.dark-mode .custom-tooltip {
@@ -588,6 +603,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        min-width: 250px;
+        max-width: 90vw;
+        font-size: 0.9rem;
+        padding: 12px 16px;
       }
     }
   </style>
@@ -644,7 +663,11 @@
                 <i class="bi bi-lightning-fill me-2" style="color: #ffd700;"></i>
                 <strong>많이 스캔할수록 더 많이 절약하세요!</strong>
               </p>
-              <p class="text-white mb-0 fs-6 mt-2">
+              <p class="text-white mb-2 fs-6 mt-2">
+                <i class="bi bi-bookmark-star-fill me-2" style="color: #ffd700;"></i>
+                <strong>목차 작성: 책과 함께 주문시 30% 할인!</strong>
+              </p>
+              <p class="text-white mb-0 fs-6">
                 <i class="bi bi-calendar-event me-2" style="color: #ffd700;"></i>
                 <strong>특가 기간: 8월 21일까지!</strong>
               </p>
@@ -753,37 +776,43 @@
                 <table class="table table-sm table-bordered align-middle text-center">
                   <thead class="table-light">
                     <tr>
-                      <th>페이지 범위</th>
-                      <th>목차 작성비</th>
+                      <th>목차 개수</th>
+                      <th>정가</th>
+                      <th>할인가 (30%↓)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>1 ~ 100쪽</td>
-                      <td>4,000원</td>
+                      <td>1 ~ 10개</td>
+                      <td>3,000원</td>
+                      <td class="text-success fw-bold">2,100원</td>
                     </tr>
                     <tr>
-                      <td>101 ~ 200쪽</td>
-                      <td>6,000원</td>
+                      <td>11 ~ 30개</td>
+                      <td>3,250원 ~ 5,000원</td>
+                      <td class="text-success fw-bold">2,275원 ~ 3,500원</td>
                     </tr>
                     <tr>
-                      <td>201 ~ 300쪽</td>
-                      <td>8,000원</td>
+                      <td>31 ~ 60개</td>
+                      <td>5,080원 ~ 8,000원</td>
+                      <td class="text-success fw-bold">3,556원 ~ 5,600원</td>
                     </tr>
                     <tr>
-                      <td>301 ~ 500쪽</td>
-                      <td>10,000원</td>
+                      <td>61 ~ 100개</td>
+                      <td>8,060원 ~ 10,400원</td>
+                      <td class="text-success fw-bold">5,642원 ~ 7,280원</td>
                     </tr>
                     <tr>
-                      <td>501 ~ 800쪽</td>
-                      <td>12,000원</td>
-                    </tr>
-                    <tr>
-                      <td>801쪽 이상</td>
-                      <td>15,000원</td>
+                      <td>101개 이상</td>
+                      <td>10,450원~</td>
+                      <td class="text-success fw-bold">7,315원~</td>
                     </tr>
                   </tbody>
                 </table>
+                <small class="text-success d-block mt-2">
+                  <i class="bi bi-gift-fill me-1"></i>
+                  <strong>책 스캔과 함께 주문시 30% 할인 자동 적용!</strong>
+                </small>
               </div>
             </div>
           </div>
@@ -830,8 +859,8 @@
                 <span id="recommendationText">📖 이런 두께의 책이라면 OCR 옵션을 추천해요!</span>
               </div>
             </div>
-            <div class="table-responsive mb-3">
-              <table class="table table-bordered align-middle text-center" id="bookTable">
+            <div class="table-responsive mb-3" style="overflow: visible;">
+              <table class="table table-bordered align-middle text-center" id="bookTable" style="overflow: visible;">
                 <thead>
                   <tr>
                     <th>쪽 수</th>
@@ -860,8 +889,11 @@
                         목차
                         <i class="bi bi-question-circle help-icon"></i>
                         <div class="custom-tooltip">
-                          PDF 목차를 자동 생성해드려요!<br>
-                          <small>원하는 페이지로 바로 이동</small>
+                          클릭 한 번으로 원하는 페이지로!<br>
+                          <small>✅ 굿노트, 플렉슬 완벽 호환</small><br>
+                          <small>📊 목차 1~10개: 3,000원 / 목차 11~30개: 최대 5,000원</small><br>
+                          <small>📊 목차 31~60개: 최대 8,000원 / 목차 61~100개: 최대 10,400원</small><br>
+                          <small class="text-success">🎉 책과 함께 주문시 30% 할인!</small>
                         </div>
                       </div>
                     </th>
@@ -874,7 +906,7 @@
                     <td><input type="number" class="form-control pageCount" min="1" value="100" placeholder="쪽수"></td>
                     <td><input type="checkbox" class="form-check-input ocr"></td>
                     <td><input type="checkbox" class="form-check-input highRes"></td>
-                    <td><input type="checkbox" class="form-check-input toc"></td>
+                    <td><input type="number" class="form-control tocCount" min="0" value="0" placeholder="목차 개수"></td>
                     <td class="individualPrice">4000원</td>
                     <td><button class="btn btn-sm btn-danger" onclick="removeRow(this)">삭제</button></td>
                   </tr>
@@ -983,8 +1015,13 @@
       const tbody = document.querySelector("#bookTable tbody");
       const newRow = tbody.rows[0].cloneNode(true);
       newRow.querySelectorAll("input").forEach(input => {
-        if (input.type === "number")
-          input.value = 100; // 기본 100쪽
+        if (input.type === "number") {
+          if (input.classList.contains("pageCount")) {
+            input.value = 100; // 기본 100쪽
+          } else if (input.classList.contains("tocCount")) {
+            input.value = 0; // 기본 목차 0개
+          }
+        }
         if (input.type === "checkbox")
           input.checked = false;
       });
@@ -1005,7 +1042,9 @@
         const p = +row.querySelector(".pageCount").value;
         const o = row.querySelector(".ocr").checked;
         const h = row.querySelector(".highRes").checked;
-        const t = row.querySelector(".toc").checked;        // ▷ 변경된 기본 가격 로직
+        const tocCount = parseInt(row.querySelector(".tocCount").value) || 0;  // 목차 개수
+
+        // ▷ 변경된 기본 가격 로직
         let perBookPrice;
         if (p <= 300) {
           perBookPrice = 4000;
@@ -1017,15 +1056,26 @@
         if (o) perBookPrice += 2000;
         if (h) perBookPrice += 2000;
 
-        // 목차 가격 (구간별 고정가격)
-        if (t) {
-          let tocPrice;
-          if (p <= 100) tocPrice = 4000;
-          else if (p <= 200) tocPrice = 6000;
-          else if (p <= 300) tocPrice = 8000;
-          else if (p <= 500) tocPrice = 10000;
-          else if (p <= 800) tocPrice = 12000;
-          else tocPrice = 15000;
+        // 목차 가격 (새로운 5구간 체계)
+        if (tocCount > 0) {
+          let tocPrice = 0;
+          if (tocCount <= 10) {
+            tocPrice = 3000; // 최소 주문금액
+          } else if (tocCount <= 30) {
+            tocPrice = 3000 + (tocCount - 10) * 250;
+          } else if (tocCount <= 60) {
+            tocPrice = 5000 + (tocCount - 30) * 80;
+          } else if (tocCount <= 100) {
+            tocPrice = 8000 + (tocCount - 60) * 60;
+          } else {
+            tocPrice = 10400 + (tocCount - 100) * 50;
+          }
+          
+          // 책과 함께 주문 시 30% 할인 적용 (기본 스캔 가격이 있을 때)
+          if (p > 0) {
+            tocPrice = Math.round(tocPrice * 0.7); // 30% 할인
+          }
+          
           perBookPrice += tocPrice;
         }
 
@@ -1117,7 +1167,7 @@
         const pages = +row.querySelector(".pageCount").value;
         const hasOCR = row.querySelector(".ocr").checked;
         const hasHighRes = row.querySelector(".highRes").checked;
-        const hasTOC = row.querySelector(".toc").checked;
+        const tocCount = parseInt(row.querySelector(".tocCount").value) || 0;  // 목차 개수
 
         // OCR 추천 (300쪽 이상 + OCR 없음)
         if (pages >= 300 && !hasOCR && !hasRecommendation) {
@@ -1130,8 +1180,8 @@
           hasRecommendation = true;
         }
         // 목차 추천 (두꺼운 책 + 목차 없음)
-        else if (pages >= 400 && !hasTOC && !hasRecommendation) {
-          recommendationText.innerHTML = `📚 ${pages}쪽 대용량 도서라면 <strong>목차 작성</strong>을 추천! 원하는 내용을 빠르게 찾을 수 있어요.`;
+        else if (pages >= 400 && tocCount === 0 && !hasRecommendation) {
+          recommendationText.innerHTML = `📚 ${pages}쪽 대용량 도서라면 <strong>목차 생성</strong>을 추천! 클릭 한 번으로 원하는 페이지 이동이 가능해요. (책과 함께 주문시 30% 할인!)`;
           hasRecommendation = true;
         }
         // 올인원 패키지 추천
@@ -1185,18 +1235,31 @@
     function prepareEstimate() {
       calculatePrice();
       let text = "[북스캔 서비스 견적서]\n";
+      let hasTocDiscount = false;
+      
       document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
         const p = row.querySelector(".pageCount").value;
         const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
         const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
-        const t = row.querySelector(".toc").checked ? '목차 ' : '';
+        const tocCount = parseInt(row.querySelector(".tocCount").value) || 0;
+        let t = '';
+        if (tocCount > 0) {
+          t = `목차${tocCount}개(30%할인) `;
+          hasTocDiscount = true;
+        }
         const price = row.querySelector(".individualPrice").innerText;
         text += `책 ${idx + 1}: ${p}쪽, 옵션: ${o}${h}${t}, 가격: ${price}\n`;
       });
+      
       text += document.getElementById("result").innerText + '\n';
       if (document.getElementById("discountInfo").innerText) {
         text += `(${document.getElementById("discountInfo").innerText})\n`;
       }
+      
+      if (hasTocDiscount) {
+        text += '\n🎉 목차 작성 30% 할인이 적용되었습니다!\n';
+      }
+      
       document.getElementById("estimateContent").innerText = text;
       lastEstimateText = text;
     } function copyEstimate() {
