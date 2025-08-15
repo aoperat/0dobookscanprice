@@ -37,7 +37,10 @@
         // 페이지 버전 체크 및 업데이트 알림
         (function() {
             const CURRENT_VERSION = '20250815_v4'; // 버전 업데이트
-            const STORAGE_KEY = 'page_version_toc_price';
+            
+            // 파일명 기반 고유 키 생성
+            const fileName = window.location.pathname.split('/').pop().split('.')[0] || 'index';
+            const STORAGE_KEY = `page_version_${fileName}`;
             
             function createUpdateNotification() {
                 // 기존 알림이 있으면 제거
