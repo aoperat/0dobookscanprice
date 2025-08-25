@@ -1,0 +1,68 @@
+{
+  "version": "2025.08.25",
+  "last_updated": "2025-08-25T00:00:00Z",
+  
+  "scan_pricing": {
+    "base_prices": [
+      { "max_pages": 300, "price": 4000 },
+      { "max_pages": 400, "price": 5000 },
+      { "max_pages": 500, "price": 6000 },
+      { "max_pages": 600, "price": 7000 },
+      { "max_pages": null, "base_price": 4000, "extra_per_100": 1000 }
+    ],
+    "options": {
+      "ocr": 1200,
+      "high_resolution": 1000
+    }
+  },
+  
+  "toc_pricing": {
+    "tiers": [
+      { "max_count": 10, "base_price": 3000, "per_item": 0 },
+      { "max_count": 30, "base_price": 3000, "per_item": 250, "threshold": 10 },
+      { "max_count": 60, "base_price": 5000, "per_item": 80, "threshold": 30 },
+      { "max_count": 100, "base_price": 8000, "per_item": 60, "threshold": 60 },
+      { "max_count": null, "base_price": 10400, "per_item": 50, "threshold": 100 }
+    ],
+    "bundle_discount": 0.3
+  },
+  
+  "bulk_discounts": [
+    { "min_books": 5, "discount_rate": 0.05 },
+    { "min_books": 10, "discount_rate": 0.10 },
+    { "min_books": 20, "discount_rate": 0.15 }
+  ],
+  
+  "promotion": {
+    "active": true,
+    "end_date": "2025-08-21T23:59:59Z",
+    "description": "특가 기간: 8월 21일까지!"
+  },
+  
+  "service_info": {
+    "max_width_mm": 240,
+    "min_pages": 1,
+    "default_pages": 100,
+    "default_toc_count": 0
+  },
+  
+  "display_messages": {
+    "urgency_messages": [
+      "⏰ 특가 종료까지 {time}! 지금 주문하세요!",
+      "🔥 8월 21일까지 한정 특가! 남은 시간 {time}",
+      "⚡ 마감 임박! {time} 후 정가로 복귀합니다!",
+      "🎯 특별 할인 마감까지 {time} 남았어요!"
+    ],
+    "recommendations": {
+      "ocr_threshold": 300,
+      "high_res_threshold": 200,
+      "toc_threshold": 400,
+      "bundle_threshold": 250
+    },
+    "tooltips": {
+      "ocr": "텍스트 검색이 가능한 PDF로 만들어드려요!<br><small>단어나 문장을 바로 찾을 수 있어요</small>",
+      "high_resolution": "400dpi 고화질로 선명하게!<br><small>이미지와 도표가 더 깨끗해요</small>",
+      "toc": "클릭 한 번으로 원하는 페이지로!<br><small>✅ 굿노트, 플렉슬 완벽 호환</small><br><small>📊 목차 1~10개: 3,000원 / 목차 11~30개: 최대 5,000원</small><br><small>📊 목차 31~60개: 최대 8,000원 / 목차 61~100개: 최대 10,400원</small><br><small class=\"text-success\">🎉 책과 함께 주문시 30% 할인!</small>"
+    }
+  }
+}
