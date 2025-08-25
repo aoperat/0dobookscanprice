@@ -1,7 +1,7 @@
 {
   "version": "2025.08.25",
   "last_updated": "2025-08-25T00:00:00Z",
-  
+
   "scan_pricing": {
     "base_prices": [
       { "max_pages": 300, "price": 4000 },
@@ -11,41 +11,46 @@
       { "max_pages": null, "base_price": 4000, "extra_per_100": 1000 }
     ],
     "options": {
-      "ocr": 1200,
+      "ocr": 1000,
       "high_resolution": 1000
     }
   },
-  
+
   "toc_pricing": {
     "tiers": [
       { "max_count": 10, "base_price": 3000, "per_item": 0 },
       { "max_count": 30, "base_price": 3000, "per_item": 250, "threshold": 10 },
       { "max_count": 60, "base_price": 5000, "per_item": 80, "threshold": 30 },
       { "max_count": 100, "base_price": 8000, "per_item": 60, "threshold": 60 },
-      { "max_count": null, "base_price": 10400, "per_item": 50, "threshold": 100 }
+      {
+        "max_count": null,
+        "base_price": 10400,
+        "per_item": 50,
+        "threshold": 100
+      }
     ],
     "bundle_discount": 0.3
   },
-  
+
   "bulk_discounts": [
     { "min_books": 5, "discount_rate": 0.05 },
-    { "min_books": 10, "discount_rate": 0.10 },
+    { "min_books": 10, "discount_rate": 0.1 },
     { "min_books": 20, "discount_rate": 0.15 }
   ],
-  
+
   "promotion": {
     "active": true,
     "end_date": "2025-08-21T23:59:59Z",
     "description": "특가 기간: 8월 21일까지!"
   },
-  
+
   "service_info": {
     "max_width_mm": 240,
     "min_pages": 1,
     "default_pages": 100,
     "default_toc_count": 0
   },
-  
+
   "display_messages": {
     "urgency_messages": [
       "⏰ 특가 종료까지 {time}! 지금 주문하세요!",
