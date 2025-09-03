@@ -20,7 +20,7 @@
   <script>
     // 페이지 버전 체크 및 업데이트 알림
     (function () {
-      const CURRENT_VERSION = '20250825_v5_JSON'; // JSON 설정 적용 버전
+      const CURRENT_VERSION = '20250903_v6_PRICE_FIX'; // 가격 계산 수정 버전
 
       // 파일명 기반 고유 키 생성
       const fileName = window.location.pathname.split('/').pop().split('.')[0] || 'index';
@@ -1190,7 +1190,9 @@
         }
 
         pricingConfig = await response.json();
-        console.log('가격 정책 로드 완료:', pricingConfig.version);
+        console.log('=== 가격 정책 로드 완료 ===');
+        console.log('버전:', pricingConfig.version);
+        console.log('스캔 가격 설정:', pricingConfig.scan_pricing.base_prices);
         console.log('OCR 가격:', pricingConfig.scan_pricing.options.ocr);
         console.log('고해상도 가격:', pricingConfig.scan_pricing.options.high_resolution);
 
@@ -1199,10 +1201,12 @@
         updateTooltips();
         calculatePrice();
       } catch (error) {
-        console.warn('가격 정책 로딩 실패, 기본값 사용:', error.message);
+        console.warn('⚠️ 가격 정책 로딩 실패, 기본값 사용:', error.message);
+        console.warn('실패한 URL:', `pricing_config.json?v=${timestamp}&r=${random}`);
         // 기본값으로 폴백
         pricingConfig = getDefaultPricingConfig();
-        console.log('기본 가격 정책으로 폴백:', pricingConfig.version);
+        console.log('📋 기본 가격 정책으로 폴백:', pricingConfig.version);
+        console.log('📋 기본값 601쪽 이상 구간:', pricingConfig.scan_pricing.base_prices[4]);
         updatePricingTable();
         updateTooltips();
         calculatePrice();
@@ -1220,7 +1224,7 @@
             { max_pages: 400, price: 5000 },
             { max_pages: 500, price: 6000 },
             { max_pages: 600, price: 7000 },
-            { max_pages: null, base_price: 4000, extra_per_100: 1000 }
+            { max_pages: null, base_price: 8000, extra_per_100: 1000 }
           ],
           options: {
             ocr: 1000,           // JSON 설정과 동일
@@ -1411,17 +1415,36 @@
     // 책 가격 계산 함수
     function calculateBookPrice(pages) {
       const basePrices = pricingConfig.scan_pricing.base_prices;
+      
+      console.log(`=== 가격 계산 디버그 (${pages}쪽) ===`);
+      console.log('현재 가격 설정:', basePrices);
+      console.log('각 구간 상세 정보:');
+      basePrices.forEach((tier, index) => {
+        console.log(`  구간 ${index}: max_pages=${tier.max_pages}, price=${tier.price}, base_price=${tier.base_price}, extra_per_100=${tier.extra_per_100}`);
+      });
 
       for (let tier of basePrices) {
         if (tier.max_pages === null) {
           // 마지막 구간 (601쪽 이상)
-          return tier.base_price + Math.ceil((pages - 600) / 100) * tier.extra_per_100;
+          console.log(`601쪽 이상 구간 처리: pages=${pages}`);
+          console.log(`base_price=${tier.base_price}, extra_per_100=${tier.extra_per_100}`);
+          
+          const extraBlocks = Math.floor((pages - 601) / 100);
+          console.log(`extraBlocks 계산: Math.floor((${pages} - 601) / 100) = ${extraBlocks}`);
+          
+          const finalPrice = tier.base_price + extraBlocks * tier.extra_per_100;
+          console.log(`최종 가격: ${tier.base_price} + ${extraBlocks} × ${tier.extra_per_100} = ${finalPrice}`);
+          
+          return finalPrice;
         } else if (pages <= tier.max_pages) {
+          console.log(`구간 매치: ${pages}쪽 <= ${tier.max_pages}쪽, 가격: ${tier.price}원`);
           return tier.price;
         }
+        console.log(`구간 미매치: ${pages}쪽 > ${tier.max_pages}쪽, 다음 구간 확인`);
       }
 
       // 폴백 (여기까지 올 일은 없어야 함)
+      console.error('⚠️ 폴백 가격 적용: 4000원');
       return 4000;
     }
 
