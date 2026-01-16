@@ -4,10 +4,10 @@
 
   "scan_pricing": {
     "base_prices": [
-      { "max_pages": 300, "price": 4000 },
-      { "max_pages": 400, "price": 5000 },
-      { "max_pages": 500, "price": 6000 },
-      { "max_pages": 600, "price": 7000 },
+      { "max_pages": 299, "price": 4000 },
+      { "max_pages": 399, "price": 5000 },
+      { "max_pages": 499, "price": 6000 },
+      { "max_pages": 599, "price": 7000 },
       { "max_pages": null, "base_price": 8000, "extra_per_100": 1000 }
     ],
     "options": {

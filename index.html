@@ -799,54 +799,6 @@
         <h1 class="mb-3">스캔 서비스 가격 계산기</h1>
       </div>
 
-      <!-- 할인율 안내 -->
-      <div class="col-12">
-        <div class="card shadow-lg border-success discount-card">
-          <div class="card-body text-center discount-highlight"
-            style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-            <h3 class="card-title text-white mb-4">
-              <i class="bi bi-star-fill me-2" style="color: #ffd700;"></i>💰 대량 스캔 특별 할인 💰
-            </h3>
-            <div class="row g-4">
-              <div class="col-md-4">
-                <div class="discount-item p-4 bg-white rounded-3 border shadow-sm">
-                  <h1 class="discount-percentage text-success mb-2" style="font-size: 3rem; font-weight: bold;">5%</h1>
-                  <p class="mb-1 fw-bold fs-5">5권 이상</p>
-                  <small class="text-muted">첫 할인 혜택!</small>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="discount-item p-4 bg-white rounded-3 border shadow-sm">
-                  <h1 class="discount-percentage text-warning mb-2" style="font-size: 3rem; font-weight: bold;">10%</h1>
-                  <p class="mb-1 fw-bold fs-5">10권 이상</p>
-                  <small class="text-muted">인기 할인!</small>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="discount-item p-4 bg-white rounded-3 border shadow-sm">
-                  <h1 class="discount-percentage text-danger mb-2" style="font-size: 3rem; font-weight: bold;">15%</h1>
-                  <p class="mb-1 fw-bold fs-5">20권 이상</p>
-                  <small class="text-muted">최대 할인!</small>
-                </div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <p class="text-white mb-0 fs-5">
-                <i class="bi bi-lightning-fill me-2" style="color: #ffd700;"></i>
-                <strong>많이 스캔할수록 더 많이 절약하세요!</strong>
-              </p>
-              <p class="text-white mb-2 fs-6 mt-2">
-                <i class="bi bi-bookmark-star-fill me-2" style="color: #ffd700;"></i>
-                <strong>목차 작성: 책과 함께 주문시 30% 할인!</strong>
-              </p>
-              <p class="text-white mb-0 fs-6">
-                <i class="bi bi-calendar-event me-2" style="color: #ffd700;"></i>
-                <strong>특가 기간: 8월 21일까지!</strong>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- 서비스 안내 -->
       <div class="col-md-6">
@@ -857,7 +809,6 @@
             <ul class="list-unstyled ps-3 mb-3">
               <li class="mb-2"><i class="bi bi-file-earmark-text me-2 text-info"></i>OCR (검색 가능한 PDF 제공)</li>
               <li class="mb-2"><i class="bi bi-aspect-ratio me-2 text-success"></i>고해상도(400dpi) 옵션</li>
-              <li class="mb-2"><i class="bi bi-percent me-2 text-warning"></i>대량 스캔 할인</li>
               <li class="mb-2"><i class="bi bi-cloud-upload me-2 text-secondary"></i>이메일 · 클라우드 전달</li>
               <li class="mb-2"><i class="bi bi-clock-history me-2 text-primary"></i>영도 지역 저녁 수령 가능</li>
             </ul>
@@ -900,31 +851,31 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>1 ~ 300쪽</td>
+                    <td>1 ~ 299쪽</td>
                     <td>4,000원</td>
                     <td>+2,000원</td>
                     <td>+2,000원</td>
                   </tr>
                   <tr>
-                    <td>301 ~ 400쪽</td>
+                    <td>300 ~ 399쪽</td>
                     <td>5,000원</td>
                     <td>+2,000원</td>
                     <td>+2,000원</td>
                   </tr>
                   <tr>
-                    <td>401 ~ 500쪽</td>
+                    <td>400 ~ 499쪽</td>
                     <td>6,000원</td>
                     <td>+2,000원</td>
                     <td>+2,000원</td>
                   </tr>
                   <tr>
-                    <td>501 ~ 600쪽</td>
+                    <td>500 ~ 599쪽</td>
                     <td>7,000원</td>
                     <td>+2,000원</td>
                     <td>+2,000원</td>
                   </tr>
                   <tr>
-                    <td>601쪽 이상</td>
+                    <td>600쪽 이상</td>
                     <td>기본 4,000원 + (페이지초과÷100)*1,000원</td>
                     <td>+2,000원</td>
                     <td>+2,000원</td>
@@ -1001,7 +952,6 @@
                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#estimateModal"
                   onclick="prepareEstimate()"><i class="bi bi-clipboard me-1"></i>견적서 보기/복사</button>
               </div>
-              <div id="discountInfo" class="fs-6 text-danger mb-2" style="min-height: 1.5rem;">&nbsp;</div>
               <div id="result" class="fs-4 fw-semibold result-text mb-2" style="min-height: 2rem;">총 가격: 0원</div>
 
               <!-- 긴급성 메시지 -->
@@ -1010,20 +960,6 @@
               </div>
 
               <!-- 번들 할인 제안 -->
-              <div id="bundleOffer" class="bundle-offer" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <strong>🎯 <span id="bundleText">2권 더 추가하면 10% 할인!</span></strong>
-                    <div class="progress-bar-custom">
-                      <div id="discountProgress" class="progress-fill" style="width: 60%"></div>
-                    </div>
-                    <small class="text-muted">할인까지 <span id="booksNeeded">2권</span> 더 필요해요!</small>
-                  </div>
-                  <div class="text-end">
-                    <div class="fs-5 fw-bold text-success">💰 <span id="potentialSavings">0</span>원 절약!</div>
-                  </div>
-                </div>
-              </div>
 
               <!-- 개인화된 추천 -->
               <div id="recommendation" class="recommendation-box" style="display: none;">
@@ -1069,6 +1005,7 @@
                         </div>
                       </div>
                     </th>
+                    <th>제본</th>
                     <th>가격</th>
                     <th>삭제</th>
                   </tr>
@@ -1079,13 +1016,14 @@
                     <td><input type="checkbox" class="form-check-input ocr"></td>
                     <td><input type="checkbox" class="form-check-input highRes"></td>
                     <td><input type="number" class="form-control tocCount" min="0" value="0" placeholder="목차 개수"></td>
+                    <td><input type="checkbox" class="form-check-input binding"></td>
                     <td class="individualPrice">4000원</td>
                     <td><button class="btn btn-sm btn-danger" onclick="removeRow(this)">삭제</button></td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="6" class="p-2">
+                    <td colspan="7" class="p-2">
                       <button class="btn btn-success w-100" onclick="addRow()">
                         <i class="bi bi-plus-lg me-2"></i>책 추가
                       </button>
@@ -1220,10 +1158,10 @@
         last_updated: "2025-08-25T00:00:00Z",
         scan_pricing: {
           base_prices: [
-            { max_pages: 300, price: 4000 },
-            { max_pages: 400, price: 5000 },
-            { max_pages: 500, price: 6000 },
-            { max_pages: 600, price: 7000 },
+            { max_pages: 299, price: 4000 },
+            { max_pages: 399, price: 5000 },
+            { max_pages: 499, price: 6000 },
+            { max_pages: 599, price: 7000 },
             { max_pages: null, base_price: 8000, extra_per_100: 1000 }
           ],
           options: {
@@ -1349,13 +1287,14 @@
       // 디버깅: 현재 사용 중인 옵션 가격 확인
       console.log('현재 옵션 가격 - OCR:', pricingConfig.scan_pricing.options.ocr, '원, 고해상도:', pricingConfig.scan_pricing.options.high_resolution, '원');
 
-      let totalBase = 0, bookSum = 0;
+      let totalBase = 0, bookSum = 0, totalBindingPrice = 0;
       document.querySelectorAll("#bookTable tbody tr").forEach((row, index) => {
         const c = 1; // 한 줄에 한 권으로 고정
         const p = +row.querySelector(".pageCount").value;
         const o = row.querySelector(".ocr").checked;
         const h = row.querySelector(".highRes").checked;
         const tocCount = parseInt(row.querySelector(".tocCount").value) || 0;
+        const binding = row.querySelector(".binding").checked;
 
         // JSON 설정을 사용한 기본 가격 계산
         let perBookPrice = calculateBookPrice(p);
@@ -1387,6 +1326,15 @@
           console.log(`책 ${index + 1}: 목차 가격 ${tocPrice}원 추가`);
         }
 
+        // 제본 가격 계산 (500페이지 이하면 4000원, 이상이면 5000원)
+        let bindingCost = 0;
+        if (binding) {
+          bindingCost = p <= 500 ? 4000 : 5000;
+          perBookPrice += bindingCost;
+          totalBindingPrice += bindingCost;
+          console.log(`책 ${index + 1}: 제본 가격 ${bindingCost}원 추가`);
+        }
+
         // 권 수 반영
         const base = perBookPrice * c;
         row.querySelector(".individualPrice").innerText = `${base}원`;
@@ -1395,27 +1343,21 @@
         bookSum += c;
       });
 
-      // JSON 설정을 사용한 할인 계산
-      const discountRate = calculateBulkDiscount(bookSum);
-      const discountAmount = Math.round(totalBase * discountRate);
-      const total = Math.round(totalBase * (1 - discountRate));
+      // 할인 없이 총액 계산
+      const total = totalBase;
 
-      console.log(`총 계산: 기본 총액 ${totalBase}원, 할인율 ${discountRate * 100}%, 최종 ${total}원`);
+      console.log(`총 계산: 기본 총액 ${totalBase}원, 최종 ${total}원`);
 
       document.getElementById("result").innerText = `총 가격: ${total}원`;
-      document.getElementById("discountInfo").innerHTML =
-        discountRate > 0
-          ? `할인율: ${discountRate * 100}% 적용 (절약 ${discountAmount}원)`
-          : '&nbsp;';
 
       // 마케팅 기능들 업데이트
-      updateMarketingMessages(bookSum, totalBase, discountRate);
+      updateMarketingMessages(bookSum, totalBase);
     }
 
     // 책 가격 계산 함수
     function calculateBookPrice(pages) {
       const basePrices = pricingConfig.scan_pricing.base_prices;
-      
+
       console.log(`=== 가격 계산 디버그 (${pages}쪽) ===`);
       console.log('현재 가격 설정:', basePrices);
       console.log('각 구간 상세 정보:');
@@ -1425,16 +1367,16 @@
 
       for (let tier of basePrices) {
         if (tier.max_pages === null) {
-          // 마지막 구간 (601쪽 이상)
-          console.log(`601쪽 이상 구간 처리: pages=${pages}`);
+          // 마지막 구간 (600쪽 이상)
+          console.log(`600쪽 이상 구간 처리: pages=${pages}`);
           console.log(`base_price=${tier.base_price}, extra_per_100=${tier.extra_per_100}`);
-          
-          const extraBlocks = Math.floor((pages - 601) / 100);
-          console.log(`extraBlocks 계산: Math.floor((${pages} - 601) / 100) = ${extraBlocks}`);
-          
+
+          const extraBlocks = Math.floor((pages - 600) / 100);
+          console.log(`extraBlocks 계산: Math.floor((${pages} - 600) / 100) = ${extraBlocks}`);
+
           const finalPrice = tier.base_price + extraBlocks * tier.extra_per_100;
           console.log(`최종 가격: ${tier.base_price} + ${extraBlocks} × ${tier.extra_per_100} = ${finalPrice}`);
-          
+
           return finalPrice;
         } else if (pages <= tier.max_pages) {
           console.log(`구간 매치: ${pages}쪽 <= ${tier.max_pages}쪽, 가격: ${tier.price}원`);
@@ -1469,67 +1411,10 @@
       return 3000;
     }
 
-    // 대량 할인율 계산 함수
-    function calculateBulkDiscount(bookCount) {
-      const discounts = pricingConfig.bulk_discounts;
-      let applicableDiscount = 0;
-
-      for (let discount of discounts) {
-        if (bookCount >= discount.min_books) {
-          applicableDiscount = discount.discount_rate;
-        }
-      }
-
-      return applicableDiscount;
-    }
-
     // 마케팅 메시지 업데이트 함수
-    function updateMarketingMessages(bookSum, totalBase, currentDiscountRate) {
-      updateBundleOffer(bookSum, totalBase);
+    function updateMarketingMessages(bookSum, totalBase) {
       updateRecommendations();
       updateUrgencyMessage(bookSum);
-    }
-
-    // 번들 할인 제안
-    function updateBundleOffer(bookSum, totalBase) {
-      if (!pricingConfig) return;
-
-      const bundleOffer = document.getElementById('bundleOffer');
-      const bundleText = document.getElementById('bundleText');
-      const booksNeeded = document.getElementById('booksNeeded');
-      const potentialSavings = document.getElementById('potentialSavings');
-      const discountProgress = document.getElementById('discountProgress');
-
-      let nextThreshold = 0;
-      let nextDiscount = 0;
-      let progressPercent = 0;
-
-      const discounts = pricingConfig.bulk_discounts;
-
-      // 현재 단계와 다음 단계 찾기
-      for (let i = 0; i < discounts.length; i++) {
-        if (bookSum < discounts[i].min_books) {
-          nextThreshold = discounts[i].min_books;
-          nextDiscount = discounts[i].discount_rate;
-
-          // 진행률 계산
-          const prevThreshold = i > 0 ? discounts[i - 1].min_books : 0;
-          progressPercent = ((bookSum - prevThreshold) / (nextThreshold - prevThreshold)) * 100;
-
-          bundleText.textContent = `${nextThreshold - bookSum}권 더 추가하면 ${nextDiscount * 100}% 할인!`;
-          booksNeeded.textContent = nextThreshold - bookSum;
-          break;
-        }
-      }
-
-      if (nextThreshold > 0 && bookSum < nextThreshold) {
-        const potentialSavingAmount = Math.round(totalBase * nextDiscount);
-        potentialSavings.textContent = potentialSavingAmount.toLocaleString();
-        discountProgress.style.width = `${Math.max(10, progressPercent)}%`;
-        bundleOffer.style.display = 'block';
-      } else {
-        bundleOffer.style.display = 'none';
-      }
     }
 
     // 개인화된 추천
@@ -1683,13 +1568,6 @@
         });
       }
 
-      // 할인율 표시 업데이트
-      const discountBadges = document.querySelectorAll('.discount-percentage');
-      pricingConfig.bulk_discounts.forEach((discount, index) => {
-        if (discountBadges[index]) {
-          discountBadges[index].textContent = `${discount.discount_rate * 100}%`;
-        }
-      });
     }
 
     // 툴팁 업데이트 함수
@@ -1724,23 +1602,27 @@
       let hasTocDiscount = false;
 
       document.querySelectorAll("#bookTable tbody tr").forEach((row, idx) => {
-        const p = row.querySelector(".pageCount").value;
+        const p = parseInt(row.querySelector(".pageCount").value) || 0;
         const o = row.querySelector(".ocr").checked ? 'OCR ' : '';
         const h = row.querySelector(".highRes").checked ? '고해상도 ' : '';
         const tocCount = parseInt(row.querySelector(".tocCount").value) || 0;
+        const binding = row.querySelector(".binding").checked;
         let t = '';
         if (tocCount > 0) {
           t = `목차${tocCount}개(30%할인) `;
           hasTocDiscount = true;
         }
         const price = row.querySelector(".individualPrice").innerText;
-        text += `책 ${idx + 1}: ${p}쪽, 옵션: ${o}${h}${t}, 가격: ${price}\n`;
+        let bindingText = '';
+        if (binding) {
+          const bindingPrice = p <= 500 ? 4000 : 5000;
+          bindingText = `제본: ${bindingPrice}원, `;
+        }
+        text += `책 ${idx + 1}: ${p}쪽, 옵션: ${o}${h}${t}${bindingText}가격: ${price}\n`;
       });
 
-      text += document.getElementById("result").innerText + '\n';
-      if (document.getElementById("discountInfo").innerText) {
-        text += `(${document.getElementById("discountInfo").innerText})\n`;
-      }
+      const total = document.getElementById("result").innerText.replace(/[^0-9]/g, '');
+      text += `\n총액: ${total}원\n`;
 
       if (hasTocDiscount) {
         text += '\n🎉 목차 작성 30% 할인이 적용되었습니다!\n';

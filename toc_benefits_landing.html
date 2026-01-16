@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF 목차 생성이 필요한 이유 - 한눈에 보는 혁신적 변화</title>
+    
+    <!-- SEO 메타태그 -->
+    <meta name="description" content="PDF 목차 생성의 필요성과 효과를 한눈에! 업무 효율성 300% 향상, 시간 단축 90%, 사용자 만족도 극대화">
+    <meta name="keywords" content="PDF 목차, PDF 북마크, 문서 정리, 업무 효율성, 시간 단축">
+    
+    <!-- 캐시 방지 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* 헤로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,0 1000,1000"/></svg>') no-repeat;
+            background-size: cover;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        /* 문제점 섹션 */
+        .problems {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .problem-icon {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .problem-desc {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* 해결책 섹션 */
+        .solutions {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .solution-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+        }
+
+        .solution-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .solution-desc {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* 비교 섹션 */
+        .comparison {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .before-after {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .before {
+            background: #ffe6e6;
+            border-radius: 20px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .after {
+            background: #e6f7ff;
+            border-radius: 20px;
+            border-left: 5px solid #1890ff;
+        }
+
+        .comparison-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .before .comparison-title {
+            color: #ff6b6b;
+        }
+
+        .after .comparison-title {
+            color: #1890ff;
+        }
+
+        .comparison-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .comparison-list li {
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .comparison-list li::before {
+            content: '✗';
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .after .comparison-list li::before {
+            content: '✓';
+            color: #1890ff;
+        }
+
+        /* ROI 섹션 */
+        .roi {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .roi-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .roi-stat {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .roi-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .roi-label {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* CTA 섹션 */
+        .final-cta {
+            padding: 5rem 0;
+            background: #333;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-desc {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #333;
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .stats-row {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* 스크롤 표시기 */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd700);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 스크롤 표시기 -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- 헤로 섹션 -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>PDF 목차 생성, <br>왜 필요할까요?</h1>
+                <p class="hero-subtitle">한눈에 보는 혁신적 변화와 놀라운 효과</p>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-number">90%</div>
+                        <div class="stat-label">시간 단축</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">300%</div>
+                        <div class="stat-label">효율성 증가</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">만족도 향상</div>
+                    </div>
+                </div>
+                
+                <a href="#problems" class="cta-button">
+                    <i class="fas fa-arrow-down"></i> 자세히 알아보기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 문제점 섹션 -->
+    <section id="problems" class="problems">
+        <div class="container">
+            <h2 class="section-title fade-in">목차 없는 PDF의 고통스러운 현실</h2>
+            
+            <div class="problems-grid">
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="problem-title">시간 낭비의 악순환</h3>
+                    <p class="problem-desc">
+                        원하는 페이지를 찾기 위해 무작정 스크롤하며 
+                        소중한 시간을 버리고 계시나요?
+                        평균 5분이 걸리는 작업이 수십 번 반복되면...
+                    </p>
+                </div>
+                
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-user-times"></i>
+                    </div>
+                    <h3 class="problem-title">사용자 경험 악화</h3>
+                    <p class="problem-desc">
+                        고객이나 동료가 문서를 받았을 때
+                        "어디에 뭐가 있는지 모르겠어요"라는 
+                        불만을 자주 듣고 계신가요?
+                    </p>
+                </div>
+                
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-business-time"></i>
+                    </div>
+                    <h3 class="problem-title">업무 효율성 저하</h3>
+                    <p class="problem-desc">
+                        회의 중 특정 자료를 찾느라 시간을 허비하고,
+                        프레젠테이션 흐름이 끊어져
+                        전문성이 의심받은 경험이 있으신가요?
+                    </p>
+                </div>
+                
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="problem-title">기회비용 증가</h3>
+                    <p class="problem-desc">
+                        문서 탐색에 쓰는 시간만큼
+                        더 중요한 업무나 창의적 사고를 위한 
+                        시간이 줄어들고 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 해결책 섹션 -->
+    <section class="solutions">
+        <div class="container">
+            <h2 class="section-title fade-in">PDF 목차 생성으로 얻는 혁신적 변화</h2>
+            
+            <div class="solutions-grid">
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="solution-title">순간 이동 가능</h3>
+                    <p class="solution-desc">
+                        클릭 한 번으로 원하는 섹션으로 바로 이동!
+                        300페이지 문서도 3초면 충분합니다.
+                    </p>
+                </div>
+                
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="solution-title">사용자 만족도 극대화</h3>
+                    <p class="solution-desc">
+                        문서를 받는 모든 사람이 "사용하기 편하다"고
+                        감탄하며, 당신의 전문성을 인정받게 됩니다.
+                    </p>
+                </div>
+                
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="solution-title">생산성 300% 향상</h3>
+                    <p class="solution-desc">
+                        문서 탐색 시간이 90% 단축되어
+                        핵심 업무에 집중할 수 있는 시간이 
+                        대폭 증가합니다.
+                    </p>
+                </div>
+                
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="solution-title">전문적 이미지 구축</h3>
+                    <p class="solution-desc">
+                        체계적으로 정리된 문서로
+                        신뢰도와 전문성을 동시에 얻어
+                        경쟁력을 강화합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 비교 섹션 -->
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title fade-in">목차 생성 전후 비교</h2>
+            
+            <div class="comparison-container">
+                <div class="before fade-in">
+                    <h3 class="comparison-title">
+                        <i class="fas fa-frown"></i> 목차 생성 전
+                    </h3>
+                    <ul class="comparison-list">
+                        <li>원하는 페이지 찾는데 5-10분 소요</li>
+                        <li>회의 중 자료 찾느라 시간 지연</li>
+                        <li>"어디에 뭐가 있는지 모르겠어요"</li>
+                        <li>문서 구조 파악 어려움</li>
+                        <li>사용자 불편함 증가</li>
+                        <li>비전문적 이미지</li>
+                        <li>업무 효율성 저하</li>
+                    </ul>
+                </div>
+                
+                <div class="after fade-in">
+                    <h3 class="comparison-title">
+                        <i class="fas fa-smile"></i> 목차 생성 후
+                    </h3>
+                    <ul class="comparison-list">
+                        <li>클릭 한 번으로 즉시 이동 (3초)</li>
+                        <li>스마트한 프레젠테이션 진행</li>
+                        <li>"사용하기 정말 편해요!"</li>
+                        <li>한눈에 보이는 문서 구조</li>
+                        <li>사용자 만족도 95% 향상</li>
+                        <li>전문적이고 체계적인 이미지</li>
+                        <li>업무 생산성 300% 증가</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI 섹션 -->
+    <section class="roi">
+        <div class="container">
+            <h2 class="section-title fade-in">투자 대비 효과 (ROI)</h2>
+            <p class="fade-in" style="font-size: 1.3rem; margin-bottom: 2rem;">
+                작은 투자로 얻는 엄청난 변화를 확인하세요
+            </p>
+            
+            <div class="roi-stats">
+                <div class="roi-stat fade-in">
+                    <div class="roi-number">₩50,000</div>
+                    <div class="roi-label">월 시간비용 절약</div>
+                </div>
+                <div class="roi-stat fade-in">
+                    <div class="roi-number">500%</div>
+                    <div class="roi-label">투자 수익률</div>
+                </div>
+                <div class="roi-stat fade-in">
+                    <div class="roi-number">40시간</div>
+                    <div class="roi-label">월 시간 절약</div>
+                </div>
+                <div class="roi-stat fade-in">
+                    <div class="roi-number">95%</div>
+                    <div class="roi-label">사용자 만족도</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 최종 CTA 섹션 -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title fade-in">지금 바로 시작하세요!</h2>
+                <p class="cta-desc fade-in">
+                    더 이상 시간을 낭비하지 마세요. 
+                    PDF 목차 생성으로 업무 혁신을 경험해보세요.
+                </p>
+                
+                <div class="cta-buttons fade-in">
+                    <a href="toc_price_table.html" class="btn-primary">
+                        <i class="fas fa-calculator"></i> 가격 확인하기
+                    </a>
+                    <a href="pdf_toc_generator.html" class="btn-secondary">
+                        <i class="fas fa-cogs"></i> 서비스 신청하기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 스크롤 애니메이션
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // 스크롤 진행률 표시
+        function updateScrollProgress() {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollProgress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollProgress + '%';
+        }
+
+        // 부드러운 스크롤
+        function smoothScroll() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // 숫자 카운터 애니메이션
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number, .roi-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.innerText.replace(/[^\d]/g, ''));
+                let current = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    if (counter.classList.contains('roi-number') && counter.innerText.includes('₩')) {
+                        counter.innerText = '₩' + Math.floor(current).toLocaleString();
+                    } else if (counter.innerText.includes('%')) {
+                        counter.innerText = Math.floor(current) + '%';
+                    } else if (counter.innerText.includes('시간')) {
+                        counter.innerText = Math.floor(current) + '시간';
+                    } else {
+                        counter.innerText = Math.floor(current) + '%';
+                    }
+                }, 20);
+            });
+        }
+
+        // 이벤트 리스너
+        window.addEventListener('scroll', () => {
+            animateOnScroll();
+            updateScrollProgress();
+        });
+
+        window.addEventListener('load', () => {
+            smoothScroll();
+            animateOnScroll();
+            setTimeout(animateCounters, 1000);
+        });
+
+        // 페이지 로딩 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 초기 애니메이션 실행
+            setTimeout(() => {
+                animateOnScroll();
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
