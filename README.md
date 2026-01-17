@@ -33,7 +33,36 @@ npm run preview
 
 빌드 결과물은 `dist` 폴더에 생성됩니다. 이 폴더의 내용을 웹 서버에 업로드하여 배포할 수 있습니다.
 
-### 배포 방법
+### GitHub Pages 배포
+
+#### 자동 배포 (GitHub Actions)
+
+1. 저장소 Settings → Pages로 이동
+2. Source를 "GitHub Actions"로 설정
+3. `.github/workflows/deploy.yml` 파일이 push되면 자동으로 배포됩니다
+
+#### 수동 배포
+
+1. **vite.config.ts 설정**
+   - 저장소 이름이 서브 경로를 사용하는 경우 (예: `username.github.io/repository-name/`)
+     ```typescript
+     base: '/repository-name/',
+     ```
+   - 커스텀 도메인이거나 루트 경로인 경우
+     ```typescript
+     base: '/',
+     ```
+
+2. **빌드 및 배포**
+   ```bash
+   npm run build
+   ```
+   
+3. **dist 폴더 배포**
+   - Option 1: `gh-pages` 브랜치에 `dist` 내용 push
+   - Option 2: GitHub Pages 설정에서 Source를 `gh-pages` 브랜치로 설정하고 `dist` 내용을 해당 브랜치에 push
+
+### 다른 배포 방법
 
 1. **정적 호스팅 서비스 (Vercel, Netlify 등)**
    - GitHub 저장소에 연결하여 자동 배포
