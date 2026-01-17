@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /b \"C:\\\\WorkSpaces\\\\BookScan\\\\Book_Scan_Price_Calculator\\\\*.html\")",
+      "Bash(ls:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(timeout 10 npm run dev:*)"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+@theme {
+  --color-kakao: #FFEB00;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+:root {
+  font-family: 'Inter', 'Noto Sans KR', system-ui, sans-serif;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+  min-height: 100vh;
+}
+
+.dark body {
+  @apply bg-gray-900 text-gray-100;
+}
