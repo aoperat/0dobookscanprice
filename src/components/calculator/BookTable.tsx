@@ -39,11 +39,10 @@ export function BookTable({ books, onUpdate, onRemove, onAdd }: BookTableProps) 
           </tr>
         </thead>
         <tbody>
-          {books.map((book, index) => (
+          {books.map((book) => (
             <BookRow
               key={book.id}
               book={book}
-              index={index}
               onUpdate={onUpdate}
               onRemove={onRemove}
               canRemove={books.length > 1}

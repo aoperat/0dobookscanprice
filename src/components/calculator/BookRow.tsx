@@ -4,14 +4,13 @@ import { pricingConfig } from '../../config/pricing';
 
 interface BookRowProps {
   book: Book;
-  index: number;
   onUpdate: (id: string, updates: Partial<Book>) => void;
   onRemove: (id: string) => void;
   canRemove: boolean;
   onEnterPress: () => void;
 }
 
-export function BookRow({ book, index, onUpdate, onRemove, canRemove, onEnterPress }: BookRowProps) {
+export function BookRow({ book, onUpdate, onRemove, canRemove, onEnterPress }: BookRowProps) {
   const price = calculateBookPrice(book, pricingConfig);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
