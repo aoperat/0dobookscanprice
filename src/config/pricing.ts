@@ -1,14 +1,14 @@
 import type { PricingConfig } from '../types/pricing';
 
 export const pricingConfig: PricingConfig = {
-  version: "2025.09.03",
+  version: "2026.01.17",
   scanPricing: {
     basePrices: [
-      { maxPages: 299, price: 4000 },
-      { maxPages: 399, price: 5000 },
-      { maxPages: 499, price: 6000 },
-      { maxPages: 599, price: 7000 },
-      { maxPages: null, basePrice: 8000, extraPer100: 1000 }
+      { maxPages: 299, price: 5000 },
+      { maxPages: 399, price: 6000 },
+      { maxPages: 499, price: 7000 },
+      { maxPages: 599, price: 8000 },
+      { maxPages: null, basePrice: 9000, extraPer100: 1000 }
     ],
     options: {
       ocr: 2000,
@@ -35,11 +35,11 @@ export const pricingConfig: PricingConfig = {
 
 // 가격표 표시용 데이터
 export const scanPriceTableData = [
-  { range: '1 ~ 299쪽', basePrice: '4,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '300 ~ 399쪽', basePrice: '5,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '400 ~ 499쪽', basePrice: '6,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '500 ~ 599쪽', basePrice: '7,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '600쪽 이상', basePrice: '8,000원 + 100쪽당 1,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
+  { range: '1 ~ 299쪽', basePrice: '5,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
+  { range: '300 ~ 399쪽', basePrice: '6,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
+  { range: '400 ~ 499쪽', basePrice: '7,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
+  { range: '500 ~ 599쪽', basePrice: '8,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
+  { range: '600쪽 이상', basePrice: '9,000원 + 100쪽당 1,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
 ];
 
 export const tocPriceTableData = [
