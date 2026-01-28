@@ -45,3 +45,16 @@ export interface PricingConfig {
 export interface BookWithPrice extends Book {
   price: number;
 }
+
+export interface ScanPriceTableRow {
+  range: string;
+  basePrice: string;
+  ocrPrice: string;
+  highResPrice: string;
+}
+
+export interface TocPriceTableRow {
+  range: string;
+  regularPrice: string;
+  discountPrice: string;
+}

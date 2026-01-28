@@ -1,4 +1,5 @@
 import type { PricingConfig } from '../types/pricing';
+import { generateScanPriceTableData, generateTocPriceTableData } from '../utils/priceCalculator';
 
 export const pricingConfig: PricingConfig = {
   version: "2026.01.17",
@@ -33,19 +34,14 @@ export const pricingConfig: PricingConfig = {
   }
 };
 
-// 가격표 표시용 데이터
-export const scanPriceTableData = [
-  { range: '1 ~ 299쪽', basePrice: '5,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '300 ~ 399쪽', basePrice: '6,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '400 ~ 499쪽', basePrice: '7,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '500 ~ 599쪽', basePrice: '8,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-  { range: '600쪽 이상', basePrice: '9,000원 + 100쪽당 1,000원', ocrPrice: '+2,000원', highResPrice: '+2,000원' },
-];
+/**
+ * 가격표 표시용 데이터 (자동 생성)
+ * pricingConfig를 기반으로 동적으로 생성되므로 단일 진실 공급원(Single Source of Truth) 유지
+ */
+export const scanPriceTableData = generateScanPriceTableData(pricingConfig);
 
-export const tocPriceTableData = [
-  { range: '1 ~ 10개', regularPrice: '3,000원', discountPrice: '2,100원' },
-  { range: '11 ~ 30개', regularPrice: '3,250원 ~ 5,000원', discountPrice: '2,275원 ~ 3,500원' },
-  { range: '31 ~ 60개', regularPrice: '5,080원 ~ 8,000원', discountPrice: '3,556원 ~ 5,600원' },
-  { range: '61 ~ 100개', regularPrice: '8,060원 ~ 10,400원', discountPrice: '5,642원 ~ 7,280원' },
-  { range: '101개 이상', regularPrice: '10,450원~', discountPrice: '7,315원~' },
-];
+/**
+ * 목차 가격표 표시용 데이터 (자동 생성)
+ * pricingConfig를 기반으로 동적으로 생성되므로 단일 진실 공급원(Single Source of Truth) 유지
+ */
+export const tocPriceTableData = generateTocPriceTableData(pricingConfig);
