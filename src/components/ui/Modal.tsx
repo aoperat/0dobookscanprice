@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ModalProps {
   isOpen: boolean;
@@ -7,57 +8,136 @@ interface ModalProps {
   title: string;
   children: ReactNode;
   footer?: ReactNode;
+  size?: 'md' | 'lg';
 }
 
-export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, footer, size = 'md' }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* 배경 오버레이 */}
+  // createPortal: transform이 걸린 조상 요소의 containing block을 탈출
+  return createPortal(
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px',
+      }}
+    >
+      {/* 백드롭 */}
       <div
-        className="absolute inset-0 bg-black/50"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(28,25,23,0.65)',
+          backdropFilter: 'blur(4px)',
+          WebkitBackdropFilter: 'blur(4px)',
+        }}
         onClick={onClose}
       />
 
-      {/* 모달 컨텐츠 */}
-      <div className="relative bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col">
+      {/* 모달 패널 */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          width: '100%',
+          maxWidth: size === 'lg' ? '48rem' : '32rem',
+          display: 'flex',
+          flexDirection: 'column',
+          maxHeight: 'calc(100svh - 32px)',
+          minHeight: size === 'lg' ? 'min(520px, 75svh)' : 'min(240px, 50svh)',
+          backgroundColor: 'var(--bg-surface)',
+          border: '1px solid var(--border)',
+          borderRadius: '14px',
+          boxShadow: 'var(--shadow-lg)',
+        }}
+      >
         {/* 헤더 */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-semibold">{title}</h2>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '16px 20px',
+            borderBottom: '1px solid var(--border)',
+            flexShrink: 0,
+          }}
+        >
+          <h2
+            className="font-display text-lg font-semibold"
+            style={{ color: 'var(--text-ink)', margin: 0 }}
+          >
+            {title}
+          </h2>
           <button
             onClick={onClose}
-            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: '50%',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'var(--bg-muted)',
+              color: 'var(--text-muted)',
+              flexShrink: 0,
+            }}
+            aria-label="닫기"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        {/* 본문 */}
-        <div className="p-4 overflow-y-auto flex-1">
+        {/* 본문 — 여기만 스크롤 */}
+        <div
+          style={{
+            padding: '20px',
+            overflowY: 'auto',
+            flex: '1 1 0',
+            minHeight: 0,
+          }}
+        >
           {children}
         </div>
 
         {/* 푸터 */}
         {footer && (
-          <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-2">
+          <div
+            style={{
+              padding: '12px 20px',
+              borderTop: '1px solid var(--border)',
+              backgroundColor: 'var(--bg-subtle)',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: '8px',
+              flexShrink: 0,
+              borderRadius: '0 0 14px 14px',
+            }}
+          >
             {footer}
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
