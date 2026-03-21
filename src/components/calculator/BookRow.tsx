@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Book } from '../../types/pricing';
 import { calculateBookPrice, formatPrice } from '../../utils/priceCalculator';
 import { pricingConfig } from '../../config/pricing';
@@ -12,9 +13,38 @@ interface BookRowProps {
 
 export function BookRow({ book, onUpdate, onRemove, canRemove, onEnterPress }: BookRowProps) {
   const price = calculateBookPrice(book, pricingConfig);
+  const [tocEnabled, setTocEnabled] = useState(book.tocCount > 0);
+  const [tocInput, setTocInput] = useState(String(book.tocCount || 1));
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') onEnterPress();
+  };
+
+  const handleTocToggle = (checked: boolean) => {
+    setTocEnabled(checked);
+    if (checked) {
+      const val = parseInt(tocInput) || 1;
+      setTocInput(String(val));
+      onUpdate(book.id, { tocCount: val });
+    } else {
+      onUpdate(book.id, { tocCount: 0 });
+    }
+  };
+
+  const handleTocChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    setTocInput(raw);
+    const parsed = parseInt(raw);
+    if (!isNaN(parsed) && parsed >= 1) {
+      onUpdate(book.id, { tocCount: parsed });
+    }
+  };
+
+  const handleTocBlur = () => {
+    const parsed = parseInt(tocInput);
+    const val = (!isNaN(parsed) && parsed >= 1) ? parsed : 1;
+    setTocInput(String(val));
+    onUpdate(book.id, { tocCount: val });
   };
 
   return (
@@ -26,6 +56,7 @@ export function BookRow({ book, onUpdate, onRemove, canRemove, onEnterPress }: B
           min="1"
           value={book.pages}
           onChange={(e) => onUpdate(book.id, { pages: parseInt(e.target.value) || 0 })}
+          onFocus={(e) => e.target.select()}
           onKeyDown={handleKeyDown}
           className="input-base w-20 text-center"
         />
@@ -53,13 +84,26 @@ export function BookRow({ book, onUpdate, onRemove, canRemove, onEnterPress }: B
 
       {/* 목차 */}
       <td className="px-3 py-2.5">
-        <input
-          type="number"
-          min="0"
-          value={book.tocCount}
-          onChange={(e) => onUpdate(book.id, { tocCount: parseInt(e.target.value) || 0 })}
-          className="input-base w-16 text-center"
-        />
+        <div className="flex items-center justify-center gap-2">
+          <input
+            type="checkbox"
+            checked={tocEnabled}
+            onChange={(e) => handleTocToggle(e.target.checked)}
+            className="checkbox-custom"
+          />
+          {tocEnabled && (
+            <input
+              type="number"
+              min="1"
+              value={tocInput}
+              onChange={handleTocChange}
+              onBlur={handleTocBlur}
+              onFocus={(e) => e.target.select()}
+              onKeyDown={handleKeyDown}
+              className="input-base w-14 text-center animate-fade-slide"
+            />
+          )}
+        </div>
       </td>
 
       {/* 제본 */}
