@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Book } from '../../types/pricing';
 import { calculateBookPrice, formatPrice } from '../../utils/priceCalculator';
 import { pricingConfig } from '../../config/pricing';
@@ -18,11 +19,32 @@ interface StepperProps {
 }
 
 function Stepper({ value, min, onChange, label }: StepperProps) {
+  const [input, setInput] = useState(String(value));
+
+  // Sync from parent when value changes externally (e.g. +/- buttons)
+  const displayValue = input === '' || isNaN(parseInt(input)) ? input : String(value);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    setInput(raw);
+    const parsed = parseInt(raw);
+    if (!isNaN(parsed) && parsed >= min) {
+      onChange(parsed);
+    }
+  };
+
+  const handleBlur = () => {
+    const parsed = parseInt(input);
+    const val = (!isNaN(parsed) && parsed >= min) ? parsed : min;
+    setInput(String(val));
+    onChange(val);
+  };
+
   return (
     <div className="flex items-center gap-2">
       <button
         className="stepper-btn"
-        onClick={() => onChange(Math.max(min, value - 1))}
+        onClick={() => { const v = Math.max(min, value - 1); onChange(v); setInput(String(v)); }}
         aria-label={`${label} 감소`}
         type="button"
       >
@@ -31,15 +53,17 @@ function Stepper({ value, min, onChange, label }: StepperProps) {
       <input
         type="number"
         min={min}
-        value={value}
-        onChange={(e) => onChange(Math.max(min, parseInt(e.target.value) || 0))}
+        value={displayValue}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        onFocus={(e) => e.target.select()}
         className="input-base text-center tabular-nums"
         style={{ width: '60px', fontWeight: 500, fontSize: '15px' }}
         aria-label={label}
       />
       <button
         className="stepper-btn"
-        onClick={() => onChange(value + 1)}
+        onClick={() => { const v = value + 1; onChange(v); setInput(String(v)); }}
         aria-label={`${label} 증가`}
         type="button"
       >
@@ -82,6 +106,12 @@ function ToggleRow({ label, desc, checked, onChange }: ToggleRowProps) {
 
 export function BookCard({ book, index, onUpdate, onRemove, canRemove }: BookCardProps) {
   const price = calculateBookPrice(book, pricingConfig);
+  const [tocEnabled, setTocEnabled] = useState(book.tocCount > 0);
+
+  const handleTocToggle = (checked: boolean) => {
+    setTocEnabled(checked);
+    onUpdate(book.id, { tocCount: checked ? 1 : 0 });
+  };
 
   return (
     <div
@@ -151,48 +181,43 @@ export function BookCard({ book, index, onUpdate, onRemove, canRemove }: BookCar
               checked={book.highRes}
               onChange={(v) => onUpdate(book.id, { highRes: v })}
             />
-            <div
-              className="flex items-center justify-between py-2.5 cursor-pointer"
-              style={{ borderBottom: 'none' }}
-            >
+            <ToggleRow
+              label="제본"
+              desc="책등 제본 처리"
+              checked={book.binding}
+              onChange={(v) => onUpdate(book.id, { binding: v })}
+            />
+            <div style={{ borderBottom: 'none' }}>
               <label
-                className="flex items-center justify-between w-full cursor-pointer"
-                htmlFor={`binding-${book.id}`}
+                className="flex items-center justify-between py-2.5 cursor-pointer"
               >
                 <div>
                   <span className="text-sm font-medium block" style={{ color: 'var(--text-ink)' }}>
-                    제본
+                    목차
                   </span>
                   <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                    책등 제본 처리
+                    목차 작성 개수
                   </span>
                 </div>
                 <input
-                  id={`binding-${book.id}`}
                   type="checkbox"
                   className="toggle ml-4"
-                  checked={book.binding}
-                  onChange={(e) => onUpdate(book.id, { binding: e.target.checked })}
+                  checked={tocEnabled}
+                  onChange={(e) => handleTocToggle(e.target.checked)}
                 />
               </label>
+              {tocEnabled && (
+                <div className="pb-2.5 animate-fade-slide">
+                  <Stepper
+                    value={book.tocCount}
+                    min={1}
+                    onChange={(v) => onUpdate(book.id, { tocCount: v })}
+                    label="목차 수량"
+                  />
+                </div>
+              )}
             </div>
           </div>
-        </div>
-
-        {/* 목차 스테퍼 */}
-        <div className="mb-4">
-          <p
-            className="text-xs font-semibold tracking-wider uppercase mb-2"
-            style={{ color: 'var(--text-muted)' }}
-          >
-            목차 수량
-          </p>
-          <Stepper
-            value={book.tocCount}
-            min={0}
-            onChange={(v) => onUpdate(book.id, { tocCount: v })}
-            label="목차 수량"
-          />
         </div>
 
         {/* 삭제 버튼 */}
